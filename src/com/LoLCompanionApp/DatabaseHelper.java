@@ -14,8 +14,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// The Android's default system path of your application database.
-	private static String DB_PATH = "/data/data/com.Leeg/databases/";
-	private static String DB_NAME = "LeegDatabase.db";
+	private static String DB_PATH = "/data/data/com.LoLCompanionApp/databases/";
+	private static String DB_NAME = "LoLCompanionAppDatabase.db";
 	private SQLiteDatabase myDataBase;
 	private final Context myContext;
 

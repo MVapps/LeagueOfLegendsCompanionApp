@@ -105,7 +105,7 @@ public class ChampionGuides extends Activity {
 		champName.setText(champion);
 		String champPic = database.changeSpecialChars(champion);
 		int path = getResources().getIdentifier(champPic.toLowerCase(),
-				"drawable", "com.Leeg");
+				"drawable", "com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);

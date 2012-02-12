@@ -43,7 +43,7 @@ public class ChampionOptions extends Activity {
 
 				// go to next page based on button pressed
 				Intent Page2 = new Intent();
-				Page2.setClassName("com.Leeg", "com.Leeg.Champion" + choice);
+				Page2.setClassName("com.LoLCompanionApp", "com.LoLCompanionApp.Champion" + choice);
 				Page2.putExtra("name", champion);
 				startActivity(Page2);
 			}
@@ -74,7 +74,7 @@ public class ChampionOptions extends Activity {
 		champName.setText(champion);
 		String champPic = database.changeSpecialChars(champion);
 		int path = getResources().getIdentifier(champPic.toLowerCase(),
-				"drawable", "com.Leeg");
+				"drawable", "com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);

@@ -111,7 +111,7 @@ public class ChampionCounterpicks extends Activity {
 	// // get the image path based on the name of the variable being put on
 	// // the screen
 	// int path = getResources().getIdentifier(champ, "drawable",
-	// "com.Leeg");
+	// "com.LoLCompanionApp");
 	//
 	// // if a picture was found
 	// if (path != 0) {
@@ -130,7 +130,7 @@ public class ChampionCounterpicks extends Activity {
 		champName.setText(champion);
 		String champPic = database.changeSpecialChars(champion);
 		int path = getResources().getIdentifier(champPic.toLowerCase(),
-				"drawable", "com.Leeg");
+				"drawable", "com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);

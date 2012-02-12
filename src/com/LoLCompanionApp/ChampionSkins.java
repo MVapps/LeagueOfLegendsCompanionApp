@@ -72,7 +72,7 @@ public class ChampionSkins extends Activity {
 			// the screen
 			int path = getResources().getIdentifier(
 					champ + "_" + String.valueOf(position), "drawable",
-					"com.Leeg");
+					"com.LoLCompanionApp");
 
 			// if a picture was found
 			if (path != 0) {
@@ -91,7 +91,7 @@ public class ChampionSkins extends Activity {
 		champName.setText(champion);
 		String champPic = database.changeSpecialChars(champion);
 		int path = getResources().getIdentifier(champPic.toLowerCase(),
-				"drawable", "com.Leeg");
+				"drawable", "com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);

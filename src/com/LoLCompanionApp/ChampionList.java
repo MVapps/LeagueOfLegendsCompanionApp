@@ -67,7 +67,7 @@ public class ChampionList extends Activity {
 				// Goes to next page
 				Intent champInfo = new Intent();
 				champInfo.putExtra("name", champion);
-				champInfo.setClassName("com.Leeg", "com.Leeg.ChampionOptions");
+				champInfo.setClassName("com.LoLCompanionApp", "com.LoLCompanionApp.ChampionOptions");
 				startActivity(champInfo);
 			}
 		});
@@ -112,7 +112,7 @@ public class ChampionList extends Activity {
 			// get the image path based on the name of the variable being put on
 			// the screen
 			int path = getResources().getIdentifier(champImg, "drawable",
-					"com.Leeg");
+					"com.LoLCompanionApp");
 
 			// if a picture was found
 			if (path != 0) {
