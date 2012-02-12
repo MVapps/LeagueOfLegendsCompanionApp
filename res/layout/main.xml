@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bgmainpage"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/champListButton"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/mainbutton"
+        android:onClick="championList"
+        android:text="Champion List"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/generalGuidesButton"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/champListButton"
+        android:layout_below="@+id/champListButton"
+        android:background="@drawable/mainbutton"
+        android:onClick="generalGuides"
+        android:text="General Guides"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/patchButton"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/generalGuidesButton"
+        android:layout_below="@+id/generalGuidesButton"
+        android:background="@drawable/mainbutton"
+        android:onClick="patches"
+        android:text="Patch Releases"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/aboutButton"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/patchButton"
+        android:layout_below="@+id/patchButton"
+        android:background="@drawable/mainbutton"
+        android:onClick="about"
+        android:text="About"
+        android:textColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/champListButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mainlogo" />
+
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include
+        android:id="@+id/champheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        layout="@layout/champheader" />
+
+    <TextView
+        android:id="@+id/textCounters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Counters:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Gallery
+        android:id="@+id/galleryCounters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:scrollbars="horizontal"
+        android:spacing="15dp" />
+
+    <TextView
+        android:id="@+id/textCountersBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Countered By:"
+        android:layout_marginTop="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Gallery
+        android:id="@+id/galleryCountersBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:scrollbars="horizontal"
+        android:spacing="15dp" />
+
+</LinearLayout>
