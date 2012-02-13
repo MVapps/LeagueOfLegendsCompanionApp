@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.LoLCompanionApp"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="3"
+    android:versionName="1.1.1"
+    android:installLocation="auto" >
 
     <uses-sdk android:minSdkVersion="8" />
 
@@ -24,29 +25,36 @@
         </activity>
         <activity
             android:name=".ChampionList"
-            android:screenOrientation="portrait"/>"
+            android:screenOrientation="portrait"
+            android:label="Pick a Champion"/>
         <activity
             android:name=".ChampionOptions"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="Champion Options" />
         <activity
             android:name=".ChampionGuides"
             android:screenOrientation="portrait"
-            android:label="Pick a guide website!" />
+            android:label="Pick a Guide Website" />
         <activity
             android:name=".ChampionSkills"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="Champion Skills" />
         <activity
             android:name=".ChampionCounterpicks"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="Champion Counters" />
         <activity
             android:name=".ChampionSkins"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="Champion Skins" />
         <activity
             android:name=".About"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="About This App" />
         <activity
             android:name=".GeneralGuides"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="General Gameplay Guides" />
     </application>
 
 </manifest>

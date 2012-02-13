@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:horizontalSpacing="1px"
-            android:listSelector="@android:id/empty"
+            android:listSelector="@android:color/transparent"
             android:numColumns="2"
             android:verticalSpacing="1px" >
         </GridView>
