@@ -15,7 +15,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// The Android's default system path of your application database.
 	private static String DB_PATH = "/data/data/com.LoLCompanionApp/databases/";
-	private static String DB_NAME = "LoLCompanionAppDatabase.db";
+	// private static String DB_NAME = "LoLCompanionAppDatabase.db";
+	private static String DB_NAME = "gameStats_en_US.sqlite";
 	private SQLiteDatabase myDataBase;
 	private final Context myContext;
 
@@ -414,33 +415,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		Cursor cur = database.rawQuery("SELECT lore FROM champions WHERE id=\'"
-				+ id + "\'", null);
+		Cursor cur = database.rawQuery(
+				"SELECT description FROM champions WHERE id=\'" + id + "\'",
+				null);
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
 			// initialize variable
-			result = cur.getString(cur.getColumnIndex("lore"));
+			result = cur.getString(cur.getColumnIndex("description"));
 		}
 		database.close();
 
 		return result;
 	}
 
-	public String getChampionStats(String champion) {
-		String result = null;
+	public String[][] getChampionStats(String champion) {
+		String result[][] = new String[9][2];
 		int id = getChampionId(champion);
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		Cursor cur = database.rawQuery("SELECT base FROM champions WHERE id=\'"
-				+ id + "\'", null);
+		Cursor cur = database
+				.rawQuery(
+						"SELECT range,moveSpeed,armorBase,armorLevel,manaBase,manaLevel," +
+						"manaRegenBase,manaRegenLevel,healthRegenBase,healthRegenLevel," +
+						"magicResistBase,magicResistLevel,healthBase,healthLevel," +
+						"attackBase,attackLevel FROM champions WHERE id=\'"
+								+ id + "\'", null);
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
 			// initialize variable
-			result = cur.getString(cur.getColumnIndex("base"));
+			result[0][0] = cur.getString(cur.getColumnIndex("range"));
+			result[1][0] = cur.getString(cur.getColumnIndex("moveSpeed"));
+			result[2][0] = cur.getString(cur.getColumnIndex("armorBase"));
+			result[3][0] = cur.getString(cur.getColumnIndex("manaBase"));
+			result[4][0] = cur.getString(cur.getColumnIndex("manaRegenBase"));
+			result[5][0] = cur.getString(cur.getColumnIndex("healthRegenBase"));
+			result[6][0] = cur.getString(cur.getColumnIndex("magicResistBase"));
+			result[7][0] = cur.getString(cur.getColumnIndex("healthBase"));
+			result[8][0] = cur.getString(cur.getColumnIndex("attackBase"));
+			result[2][1] = cur.getString(cur.getColumnIndex("armorBase"));
+			result[3][1] = cur.getString(cur.getColumnIndex("manaLevel"));
+			result[4][1] = cur.getString(cur.getColumnIndex("manaRegenLevel"));
+			result[5][1] = cur.getString(cur.getColumnIndex("healthRegenLevel"));
+			result[6][1] = cur.getString(cur.getColumnIndex("magicResistLevel"));
+			result[7][1] = cur.getString(cur.getColumnIndex("healthLevel"));
+			result[8][1] = cur.getString(cur.getColumnIndex("attackLevel"));
 		}
 		database.close();
 
