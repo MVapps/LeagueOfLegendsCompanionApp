@@ -275,17 +275,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		return string;
 	}
-
-	public String changeSpecialChars(String name) {
-		return name.replace(".", "").replace(" ", "_").replace("/", "")
-				.replace("'", "0").replace(";", "").replace(":", "")
-				.replace("-", "");
-	}
-
+	
 	public String removeSpecialChars(String name) {
 		return name.replace(".", "").replace(" ", "").replace("/", "")
 				.replace("'", "").replace(";", "").replace(":", "")
-				.replace("-", "");
+				.replace("-", "").replace("!", "");
 	}
 
 	public String[][] getAllSkillsByChampName(String champ)

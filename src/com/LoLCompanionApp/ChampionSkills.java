@@ -80,9 +80,10 @@ public class ChampionSkills extends Activity {
 		TextView champTitle = (TextView) findViewById(R.id.champTitle);
 		ImageView champImage = (ImageView) findViewById(R.id.champPicture);
 		champName.setText(champion);
-		String champPic = database.changeSpecialChars(champion);
-		int path = getResources().getIdentifier(champPic.toLowerCase(),
-				"drawable", "com.LoLCompanionApp");
+		String champPic = database.removeSpecialChars(champion);
+		int path = getResources().getIdentifier(
+				champPic.toLowerCase() + "_square_0", "drawable",
+				"com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);
@@ -109,9 +110,8 @@ public class ChampionSkills extends Activity {
 
 			// get the name of the skill, remove formatting and any extra spaces
 			// in front or behind
-			String skillImg = database.changeSpecialChars(
-					textName.getText().toString().trim().replace(":", "")
-							.replace("-", "").replace("!", "")).toLowerCase();
+			String skillImg = database.removeSpecialChars(
+					textName.getText().toString().trim().replace(" ", "_")).toLowerCase();
 			// special cases
 			if (skillImg.equals("90_caliber_net")) {
 				skillImg = "ninety_caliber_net";

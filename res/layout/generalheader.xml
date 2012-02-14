@@ -25,15 +25,16 @@
         android:textColor="@android:color/black"
         android:typeface="serif" />
 
+<!--  ONLY FOR PLAYBOOK RELEASES
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_alignTop="@+id/linearLayout1"
         android:layout_margin="3dp"
         android:background="@drawable/backarrow"
         android:onClick="back"
         android:textColor="#000000" />
-
+-->
 </RelativeLayout>

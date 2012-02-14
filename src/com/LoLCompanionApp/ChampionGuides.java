@@ -103,8 +103,8 @@ public class ChampionGuides extends Activity {
 		TextView champTitle = (TextView) findViewById(R.id.champTitle);
 		ImageView champImage = (ImageView) findViewById(R.id.champPicture);
 		champName.setText(champion);
-		String champPic = database.changeSpecialChars(champion);
-		int path = getResources().getIdentifier(champPic.toLowerCase(),
+		String champPic = database.removeSpecialChars(champion);
+		int path = getResources().getIdentifier(champPic.toLowerCase()+"_square_0",
 				"drawable", "com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -35,7 +35,7 @@ public class ChampionList extends Activity {
 		champTitles = database.getAllChampionTitles();
 
 		// Creates the listview
-		final ListView lv = (ListView) findViewById(R.id.champList);
+		final GridView lv = (GridView) findViewById(R.id.champList);
 		lv.setTextFilterEnabled(true);
 
 		// create a map list that stores the data for each champ
@@ -113,7 +113,7 @@ public class ChampionList extends Activity {
 			champImg = database.removeSpecialChars(champImg);
 			// get the image path based on the name of the variable being put on
 			// the screen
-			int path = getResources().getIdentifier(champImg,
+			int path = getResources().getIdentifier(champImg + "_square_0",
 					"drawable", "com.LoLCompanionApp");
 
 			// if a picture was found

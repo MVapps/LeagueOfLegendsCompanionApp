@@ -18,7 +18,7 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:linksClickable="false"
-        android:src="@drawable/ahri" />
+        android:src="@drawable/ahri_square_0" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -54,7 +54,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#111111" />
     </LinearLayout>
-
+<!--  ONLY FOR PLAYBOOK RELEASES
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
@@ -65,5 +65,6 @@
         android:background="@drawable/backarrow"
         android:onClick="back"
         android:textColor="#000000" />
+-->
 
 </RelativeLayout>
