@@ -50,22 +50,20 @@ public class ChampionOptions extends Activity {
 		});
 
 		String[][] stats = database.getChampionStats(champion);
-		// replace tab chars to spaces
-		//stats = stats.replace("	", " ");
 
 		// set stats text to textview
 		TextView statsText = (TextView) findViewById(R.id.stats);
 		statsText.setText("Attributes:\n"
 				+ database.getChampionAttributes(champion)
 				+ "\n\nBase Stats:\n" + "Range: " + stats[0][0]
-						+"\n\nMove Speed: " + stats[1][0] 
-						+"\n\nHealth: "+stats[7][0]+"("+stats[7][1]+")" 
-						+"\n\nHealth Regen: "+stats[5][0]+"("+stats[5][1]+")"
-						+"\n\nMana: "+stats[3][0]+"("+stats[3][1]+")"
-						+"\n\nMana Regen: "+stats[4][0]+"("+stats[4][1]+")"
-						+"\n\nAttack: "+stats[8][0]+"("+stats[8][1]+")"
-						+"\n\nArmor: "+stats[2][0]+"("+stats[2][1]+")"
-						+"\n\nMagic Resist: "+stats[6][0]+"("+stats[6][1]+")");
+				+"\nMove Speed: " + stats[1][0] 
+				+"\nHealth: "+stats[7][0]+" ("+stats[7][1]+")" 
+				+"\nHealth Regen: "+stats[5][0]+" ("+stats[5][1]+")"
+				+"\nMana: "+stats[3][0]+" ("+stats[3][1]+")"
+				+"\nMana Regen: "+stats[4][0]+" ("+stats[4][1]+")"
+				+"\nAttack: "+stats[8][0]+" ("+stats[8][1]+")"
+				+"\nArmor: "+stats[2][0]+" ("+stats[2][1]+")"
+				+"\nMagic Resist: "+stats[6][0]+" ("+stats[6][1]+")");
 
 		// set lore text to text view
 		TextView lore = (TextView) findViewById(R.id.loreText);

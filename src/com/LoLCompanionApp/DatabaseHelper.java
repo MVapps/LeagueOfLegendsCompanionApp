@@ -179,8 +179,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		cur = database.rawQuery("SELECT name FROM champions ORDER BY name ASC",
-				null);
+		cur = database.rawQuery(
+				"SELECT displayName FROM champions ORDER BY name ASC", null);
 
 		// initialize variable
 		result = new String[cur.getCount()];
@@ -224,13 +224,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public String getChampionTitle(String champ) throws SQLiteException {
 		String string = null;
+		int id = getChampionId(champ);
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT title FROM champions WHERE name=\'"
-						+ champ.replace("'", "''") + "\'", null);
+				"SELECT title FROM champions WHERE id=\'" + id + "\'", null);
 		if (cur.moveToFirst()) {
 			string = cur.getString(0);
 		}
@@ -242,12 +242,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public int getChampionId(String champ) throws SQLiteException {
 		int result = 0;
-
+		
+		champ = removeSpecialChars(champ);
+		
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
 		Cursor cur = database.rawQuery("SELECT id FROM champions WHERE name=\'"
-				+ champ.replace("'", "''") + "\'", null);
+				+ champ + "\'", null);
 		if (cur.moveToFirst()) {
 			result = cur.getInt(0);
 		}
@@ -257,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return result;
 	}
 
-	public String getChampionById(int id) throws SQLiteException {
+	public String getChampionName(int id) throws SQLiteException {
 		String string = null;
 
 		SQLiteDatabase database = getReadableDatabase();
@@ -286,18 +288,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				.replace("-", "");
 	}
 
-	public String[][] getAllSkillsByChampName(String champion) {
-		return getAllSkillsByChampId(getChampionId(champion));
-	}
-
-	public String[][] getAllSkillsByChampId(int id) throws SQLiteException {
+	public String[][] getAllSkillsByChampName(String champ)
+			throws SQLiteException {
 		String[][] result = null;
+		int id = getChampionId(champ);
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
-		Cursor cur = database.rawQuery("SELECT * FROM skills WHERE parentid=\'"
-				+ id + "\'", null);
+		Cursor cur = database.rawQuery(
+				"SELECT * FROM championAbilities WHERE championId=\'" + id
+						+ "\'", null);
 
 		// go to first row
 		if (cur.moveToFirst()) {
@@ -305,8 +306,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			for (int i = 0; i < cur.getCount(); i += 1) {
 				// get the two values
 				result[i][0] = "" + cur.getString(cur.getColumnIndex("name"));
-				result[i][1] = "" + cur.getString(cur.getColumnIndex("text"));
-				result[i][2] = "" + cur.getString(cur.getColumnIndex("type"));
+				result[i][1] = ""
+						+ cur.getString(cur.getColumnIndex("description"));
+				result[i][2] = "" + cur.getString(cur.getColumnIndex("hotkey"));
 				result[i][3] = "" + cur.getString(cur.getColumnIndex("cost"));
 				result[i][4] = "" + cur.getString(cur.getColumnIndex("range"));
 				result[i][5] = ""
@@ -321,26 +323,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return result;
 	}
 
-	public int getNumSkinsByChampId(int id) throws SQLiteException {
-		SQLiteDatabase database = getReadableDatabase();
+	public int getNumSkinsByChampName(String champ) throws SQLiteException {
 		int result = 0;
+		int id = getChampionId(champ);
+
+		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
 		Cursor cur = database.rawQuery(
-				"SELECT skins FROM champions WHERE id=\'" + id + "\'", null);
+				"SELECT COUNT(*) FROM championSkins WHERE championId=\'" + id + "\'", null);
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
 			// initialize variable
-			result = cur.getInt(cur.getColumnIndex("skins"));
+			result = cur.getInt(0);
 		}
 		database.close();
 
 		return result;
-	}
-
-	public int getNumSkinsByChampName(String champ) {
-		return getNumSkinsByChampId(getChampionId(champ));
 	}
 
 	public String[] getChampionCounters(String champion) {
@@ -388,20 +388,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		cur = database.rawQuery("SELECT * FROM champions WHERE id=\'" + id
+		cur = database.rawQuery("SELECT tags FROM champions WHERE id=\'" + id
 				+ "\'", null);
-
-		String[] attributes = { "melee", "mage", "ranged", "jungle", "support",
-				"carry", "recommended", "pusher", "tank", "assassin",
-				"stealth", "bruiser", "useless" };
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
-			for (int i = 0; i < attributes.length; i += 1) {
-				if (cur.getInt(cur.getColumnIndex(attributes[i])) == 1) {
-					result += attributes[i].toUpperCase() + " ";
-				}
-			}
+			result = cur.getString(0).toUpperCase();
 		}
 		database.close();
 
@@ -436,13 +428,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		Cursor cur = database
-				.rawQuery(
-						"SELECT range,moveSpeed,armorBase,armorLevel,manaBase,manaLevel," +
-						"manaRegenBase,manaRegenLevel,healthRegenBase,healthRegenLevel," +
-						"magicResistBase,magicResistLevel,healthBase,healthLevel," +
-						"attackBase,attackLevel FROM champions WHERE id=\'"
-								+ id + "\'", null);
+		Cursor cur = database.rawQuery("SELECT * FROM champions WHERE id=\'"
+				+ id + "\'", null);
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
@@ -459,8 +446,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			result[2][1] = cur.getString(cur.getColumnIndex("armorBase"));
 			result[3][1] = cur.getString(cur.getColumnIndex("manaLevel"));
 			result[4][1] = cur.getString(cur.getColumnIndex("manaRegenLevel"));
-			result[5][1] = cur.getString(cur.getColumnIndex("healthRegenLevel"));
-			result[6][1] = cur.getString(cur.getColumnIndex("magicResistLevel"));
+			result[5][1] = cur
+					.getString(cur.getColumnIndex("healthRegenLevel"));
+			result[6][1] = cur
+					.getString(cur.getColumnIndex("magicResistLevel"));
 			result[7][1] = cur.getString(cur.getColumnIndex("healthLevel"));
 			result[8][1] = cur.getString(cur.getColumnIndex("attackLevel"));
 		}

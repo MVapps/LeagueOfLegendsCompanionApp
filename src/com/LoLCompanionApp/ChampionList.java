@@ -68,7 +68,8 @@ public class ChampionList extends Activity {
 				// Goes to next page
 				Intent champInfo = new Intent();
 				champInfo.putExtra("name", champion);
-				champInfo.setClassName("com.LoLCompanionApp", "com.LoLCompanionApp.ChampionOptions");
+				champInfo.setClassName("com.LoLCompanionApp",
+						"com.LoLCompanionApp.ChampionOptions");
 				startActivity(champInfo);
 			}
 		});
@@ -109,11 +110,11 @@ public class ChampionList extends Activity {
 
 			// convert name to a usable format for finding pictures
 			String champImg = champion.toLowerCase();
-			champImg = database.changeSpecialChars(champImg);
+			champImg = database.removeSpecialChars(champImg);
 			// get the image path based on the name of the variable being put on
 			// the screen
-			int path = getResources().getIdentifier(champImg, "drawable",
-					"com.LoLCompanionApp");
+			int path = getResources().getIdentifier(champImg,
+					"drawable", "com.LoLCompanionApp");
 
 			// if a picture was found
 			if (path != 0) {

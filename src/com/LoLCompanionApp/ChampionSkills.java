@@ -44,16 +44,16 @@ public class ChampionSkills extends Activity {
 
 				// create stats text
 				String stats = "";
-				if (!skills[i][2].equals("null") || skills[i][2] == "") {
+				if (!skills[i][2].equals("null")) {
 					stats += "Type: " + skills[i][2];
 				}
-				if (!skills[i][3].equals("null") || skills[i][3] == "") {
+				if (!skills[i][3].equals("null")) {
 					stats += "\nCost: " + skills[i][3].toLowerCase();
 				}
-				if (!skills[i][4].equals("null") || skills[i][4] == "") {
+				if (!skills[i][4].equals("null")) {
 					stats += "\nRange: " + skills[i][4];
 				}
-				if (!skills[i][5].equals("null") || skills[i][5] == "") {
+				if (!skills[i][5].equals("null")) {
 					stats += "\nCooldown: " + skills[i][5];
 				}
 
