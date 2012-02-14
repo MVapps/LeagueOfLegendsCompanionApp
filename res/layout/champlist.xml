@@ -3,6 +3,7 @@
     android:id="@+id/listChamps"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp"
+        android:layout_gravity="center_horizontal"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -22,6 +23,7 @@
         android:id="@+id/champName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:background="#70000000"
         android:clickable="false"
         android:focusable="false"
@@ -30,7 +32,7 @@
         android:linksClickable="false"
         android:padding="2dp"
         android:text="Champion Name"
-		android:textSize="7pt"
+        android:textSize="7pt"
         android:typeface="serif" />
 
 </LinearLayout>

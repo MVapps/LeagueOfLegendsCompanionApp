@@ -16,45 +16,45 @@
         <activity
             android:name=".Main"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ChampionList"
             android:screenOrientation="portrait"
-            android:label="Pick a Champion"/>
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".ChampionOptions"
             android:screenOrientation="portrait"
-            android:label="Champion Options" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".ChampionGuides"
             android:screenOrientation="portrait"
-            android:label="Pick a Guide Website" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".ChampionSkills"
             android:screenOrientation="portrait"
-            android:label="Champion Skills" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".ChampionCounterpicks"
             android:screenOrientation="portrait"
-            android:label="Champion Counters" />
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
         <activity
             android:name=".ChampionSkins"
             android:screenOrientation="portrait"
-            android:label="Champion Skins" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".About"
             android:screenOrientation="portrait"
-            android:label="About This App" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
             android:name=".GeneralGuides"
             android:screenOrientation="portrait"
-            android:label="General Gameplay Guides" />
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
     </application>
 
 </manifest>

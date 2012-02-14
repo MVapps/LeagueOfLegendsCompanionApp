@@ -242,9 +242,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public int getChampionId(String champ) throws SQLiteException {
 		int result = 0;
-		
+
 		champ = removeSpecialChars(champ);
-		
+
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
@@ -275,7 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		return string;
 	}
-	
+
 	public String removeSpecialChars(String name) {
 		return name.replace(".", "").replace(" ", "").replace("/", "")
 				.replace("'", "").replace(";", "").replace(":", "")
@@ -325,7 +325,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// run the query
 		Cursor cur = database.rawQuery(
-				"SELECT COUNT(*) FROM championSkins WHERE championId=\'" + id + "\'", null);
+				"SELECT COUNT(*) FROM championSkins WHERE championId=\'" + id
+						+ "\'", null);
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
@@ -348,6 +349,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 						+ champion.replace("'", "''") + "\'", null);
 		if (cur.moveToFirst()) {
 			string = cur.getString(0).split(",");
+		}
+
+		database.close();
+
+		return string;
+	}
+
+	public String getSkinName(String champ, int rank) {
+		String string = null;
+
+		champ = removeSpecialChars(champ).replace(" ", "");
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT displayName FROM championSkins WHERE portrainPath=\'"
+						+ champ + "_" + rank + ".jpg\'", null);
+		if (cur.moveToFirst()) {
+			string = cur.getString(0);
 		}
 
 		database.close();

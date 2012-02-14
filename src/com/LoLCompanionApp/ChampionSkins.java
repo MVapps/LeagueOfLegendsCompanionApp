@@ -30,7 +30,7 @@ public class ChampionSkins extends Activity {
 
 		String[] texts = new String[skins];
 		for (int i = 0; i < skins; i += 1) {
-			texts[i] = " ";
+			texts[i] = database.getSkinName(champion,i);
 		}
 
 		if (skins > 0) {
