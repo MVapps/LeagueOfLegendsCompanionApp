@@ -2,6 +2,7 @@ package com.LoLCompanionApp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
