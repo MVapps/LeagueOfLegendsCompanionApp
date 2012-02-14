@@ -30,10 +30,14 @@ public class ChampionSkins extends Activity {
 
 		String[] texts = new String[skins];
 		for (int i = 0; i < skins; i += 1) {
-			texts[i] = database.getSkinName(champion,i);
+			texts[i] = database.getSkinName(champion, i);
 		}
 
 		if (skins > 0) {
+			TextView text = (TextView) findViewById(R.id.textSkinsTitle);
+			text.setText("");
+			text.setHeight(0);
+
 			// get the gallery and populate it with the pictures of skins
 			Gallery gallery = (Gallery) findViewById(R.id.skinGallery);
 
@@ -90,8 +94,9 @@ public class ChampionSkins extends Activity {
 		ImageView champImage = (ImageView) findViewById(R.id.champPicture);
 		champName.setText(champion);
 		String champPic = database.removeSpecialChars(champion);
-		int path = getResources().getIdentifier(champPic.toLowerCase()+"_square_0",
-				"drawable", "com.LoLCompanionApp");
+		int path = getResources().getIdentifier(
+				champPic.toLowerCase() + "_square_0", "drawable",
+				"com.LoLCompanionApp");
 
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);

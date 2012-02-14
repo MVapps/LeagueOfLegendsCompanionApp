@@ -365,7 +365,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT displayName FROM championSkins WHERE portrainPath=\'"
+				"SELECT displayName FROM championSkins WHERE portraitPath=\'"
 						+ champ + "_" + rank + ".jpg\'", null);
 		if (cur.moveToFirst()) {
 			string = cur.getString(0);

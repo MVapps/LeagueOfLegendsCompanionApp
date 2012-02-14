@@ -32,6 +32,7 @@
         android:linksClickable="false"
         android:padding="2dp"
         android:text="Champion Name"
+        android:textColor="@android:color/black"
         android:textSize="7pt"
         android:typeface="serif" />
 

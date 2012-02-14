@@ -1080,8 +1080,7 @@ public final class R {
         public static final int textCounters=0x7f050003;
         public static final int textCountersBy=0x7f050005;
         public static final int textExternal=0x7f050008;
-        public static final int textGallery=0x7f050029;
-        public static final int textGallery2=0x7f050027;
+        public static final int textGallery=0x7f050027;
         public static final int textSkinsTitle=0x7f05001a;
         public static final int textView1=0x7f050021;
     }
