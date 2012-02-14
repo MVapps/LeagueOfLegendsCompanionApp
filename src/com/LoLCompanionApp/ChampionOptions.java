@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class ChampionOptions extends Activity {
 
 	static final String[] OPTIONS = new String[] { "Guides", "Counterpicks",
-			"Skills", "Skins" };
+			"Skills", "Other" };
 	static private String champion;
 	DatabaseHelper database;
 
@@ -64,10 +64,6 @@ public class ChampionOptions extends Activity {
 				+"\nAttack: "+stats[8][0]+" ("+stats[8][1]+")"
 				+"\nArmor: "+stats[2][0]+" ("+stats[2][1]+")"
 				+"\nMagic Resist: "+stats[6][0]+" ("+stats[6][1]+")");
-
-		// set lore text to text view
-		TextView lore = (TextView) findViewById(R.id.loreText);
-		lore.setText(database.getChampionLore(champion));
 
 		database.close();
 	}

@@ -32,7 +32,6 @@ public class ChampionList extends Activity {
 
 		database = new DatabaseHelper(this);
 		champs = database.getAllChampions();
-		champTitles = database.getAllChampionTitles();
 
 		// Creates the listview
 		final GridView lv = (GridView) findViewById(R.id.champList);
@@ -45,7 +44,6 @@ public class ChampionList extends Activity {
 		for (int i = 0; i < champs.length; i += 1) {
 			map = new HashMap<String, String>();
 			map.put("name", champs[i]);
-			map.put("title", champTitles[i]);
 			champList.add(map);
 		}
 		// add custom adapter to display data
@@ -96,8 +94,8 @@ public class ChampionList extends Activity {
 		ChampListAdapter() {
 			// pass all parameters to the ArayAdapter
 			super(ChampionList.this, ChampionList.champList,
-					R.layout.champlist, new String[] { "name", "title" },
-					new int[] { R.id.champName, R.id.champTitle });
+					R.layout.champlist, new String[] { "name" },
+					new int[] { R.id.champName });
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
