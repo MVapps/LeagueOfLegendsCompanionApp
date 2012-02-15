@@ -14,7 +14,7 @@ public class ChampionLore extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champlore);
 
-		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
+		database = new DatabaseMain(this);
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();

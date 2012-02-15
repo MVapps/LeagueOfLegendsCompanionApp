@@ -41,7 +41,7 @@ public class ChampionList extends Activity {
 
 		initializeHeader();
 
-		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
+		database = new DatabaseMain(this);
 
 		champs = database.getAllChampions();
 		champTitles = database.getAllChampionTitles();

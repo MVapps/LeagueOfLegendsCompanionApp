@@ -23,7 +23,7 @@ public class ChampionOther extends Activity {
 		
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
-		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
+		database = new DatabaseMain(this);
 
 		createHeader();
 		

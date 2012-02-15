@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteException;
 
 public class DatabaseMain extends DatabaseHelper{
 
-	public DatabaseMain(Context context, String dbName) {
-		super(context, dbName);
+	public DatabaseMain(Context context) {
+		super(context, "gameStats_en_US.sqlite");
 	}
 	
 	public String[] getAllChampions() throws SQLiteException {

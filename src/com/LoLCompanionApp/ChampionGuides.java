@@ -26,7 +26,7 @@ public class ChampionGuides extends Activity {
 		setContentView(R.layout.champguides);
 
 		// create database object
-		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
+		database = new DatabaseMain(this);
 
 		// Loads Preferences
 		champion = getIntent().getStringExtra("name");

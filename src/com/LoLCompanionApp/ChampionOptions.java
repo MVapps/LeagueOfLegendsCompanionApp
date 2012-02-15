@@ -22,7 +22,7 @@ public class ChampionOptions extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champinfo);
 
-		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
+		database = new DatabaseMain(this);
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
