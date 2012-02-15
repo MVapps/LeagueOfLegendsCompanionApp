@@ -6,37 +6,72 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ChampionList extends Activity {
 
 	private static ArrayList<HashMap<String, String>> champList;
 	private static String[] champs, champTitles;
 	private DatabaseHelper database;
+	private String viewType;
+	SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champlistlayout);
 
+		// get the general preferences for how to view the champions
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		viewType = prefs.getString("ViewType", "grid");
+
 		initializeHeader();
 
 		database = new DatabaseHelper(this);
+
 		champs = database.getAllChampions();
+		champTitles = database.getAllChampionTitles();
 
-		// Creates the listview
-		final GridView lv = (GridView) findViewById(R.id.champList);
-		lv.setTextFilterEnabled(true);
+		// create the hash map to be used to populate the list
+		createHashMap();
 
+		GridView gview;
+		ListView lview;
+
+		// Creates the list/grid view
+		if (viewType.equals("list")) {
+			lview = (ListView) findViewById(R.id.champList);
+			lview.setTextFilterEnabled(true);
+			lview.setAdapter(new ChampListAdapter(new String[] { "name",
+					"title" }, new int[] { R.id.champName, R.id.champTitle },
+					R.layout.champlistrow));
+			lview.setOnItemClickListener(new ChampItemClick());
+		} else {
+			gview = (GridView) findViewById(R.id.champGrid);
+			gview.setTextFilterEnabled(true);
+			gview.setAdapter(new ChampListAdapter(new String[] { "name" },
+					new int[] { R.id.champName }, R.layout.champlistgrid));
+			gview.setOnItemClickListener(new ChampItemClick());
+		}
+
+		database.close();
+	}
+
+	private void createHashMap() {
 		// create a map list that stores the data for each champ
 		champList = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> map;
@@ -44,35 +79,25 @@ public class ChampionList extends Activity {
 		for (int i = 0; i < champs.length; i += 1) {
 			map = new HashMap<String, String>();
 			map.put("name", champs[i]);
+			map.put("title", champTitles[i]);
 			champList.add(map);
 		}
-		// add custom adapter to display data
-		lv.setAdapter(new ChampListAdapter());
+	}
 
-		// set a on-click listener to each row
-		lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int position, long id) {
-				// //
-				// LinearLayout clickedList = (LinearLayout)
-				// view.findViewById(R.id.listChamps);
-				// clickedList.setBackgroundColor(Color.BLUE);
-				//
-				// from the view of each row, get the text view and get the name
-				// of the champion
-				TextView text = (TextView) view.findViewById(R.id.champName);
-				String champion = text.getText().toString();
+	// click listener
+	public class ChampItemClick implements OnItemClickListener {
+		public void onItemClick(AdapterView<?> adapterView, View view,
+				int position, long id) {
+			TextView text = (TextView) view.findViewById(R.id.champName);
+			String champion = text.getText().toString();
 
-				// Goes to next page
-				Intent champInfo = new Intent();
-				champInfo.putExtra("name", champion);
-				champInfo.setClassName("com.LoLCompanionApp",
-						"com.LoLCompanionApp.ChampionOptions");
-				startActivity(champInfo);
-			}
-		});
-
-		database.close();
+			// Goes to next page
+			Intent champInfo = new Intent();
+			champInfo.putExtra("name", champion);
+			champInfo.setClassName("com.LoLCompanionApp",
+					"com.LoLCompanionApp.ChampionOptions");
+			startActivity(champInfo);
+		}
 	}
 
 	public void keyboard(View view) {
@@ -81,21 +106,47 @@ public class ChampionList extends Activity {
 		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 	}
 
-	public void initializeHeader() {
-		TextView title = (TextView) findViewById(R.id.HeaderTitle);
-		title.setText("Champion List");
-	}
-
 	public void back(View view) {
 		finish();
 	}
 
+	public void initializeHeader() {
+		TextView title = (TextView) findViewById(R.id.HeaderTitle);
+		title.setText("Champion List");
+
+		// if grid view, change button to display list view
+		if (viewType.equals("grid")) {
+			Button changeView = (Button) findViewById(R.id.buttonListType);
+			changeView.setBackgroundResource(R.drawable.viewlist);
+		}
+	}
+
+	public void changeListType(View view) {
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		
+		if (viewType.equals("list")) {
+			// change prefs
+			editor.putString("ViewType", "grid");
+		} else {
+			// change prefs
+			editor.putString("ViewType", "list");
+		}
+
+		if (editor.commit()) {
+			Toast.makeText(this, prefs.getString("ViewType", "nope"),
+					Toast.LENGTH_SHORT).show();
+		}
+
+		// restart screen with new view type
+		finish();
+		startActivity(getIntent());
+	}
+
 	class ChampListAdapter extends SimpleAdapter {
-		ChampListAdapter() {
-			// pass all parameters to the ArayAdapter
-			super(ChampionList.this, ChampionList.champList,
-					R.layout.champlist, new String[] { "name" },
-					new int[] { R.id.champName });
+		ChampListAdapter(String[] parameters, int[] resourceIds, int layoutId) {
+			super(ChampionList.this, ChampionList.champList, layoutId,
+					parameters, resourceIds);
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {

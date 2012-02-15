@@ -44,7 +44,7 @@
 	        android:layout_margin="3dp"
 	        android:background="@drawable/backarrow"
 	        android:onClick="back"
-	        android:textColor="#000000" />
+	        android:textColor="#000000" />
         -->
 
         <Button
@@ -57,10 +57,21 @@
             android:background="@drawable/search"
             android:onClick="keyboard"
             android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/buttonListType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="3dp"
+            android:layout_toLeftOf="@+id/buttonSearch"
+            android:background="@drawable/viewgrid"
+            android:onClick="changeListType"
+            android:textColor="#000000" />
     </RelativeLayout>
 
     <GridView
-        android:id="@+id/champList"
+        android:id="@+id/champGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -68,5 +79,13 @@
         android:numColumns="auto_fit"
         android:verticalSpacing="1px" >
     </GridView>
+
+    <ListView
+        android:id="@+id/champList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent"
+        android:verticalSpacing="1px" >
+    </ListView>
 
 </LinearLayout>

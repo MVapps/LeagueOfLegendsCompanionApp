@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listChamps"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg2"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/champPicture"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:linksClickable="false"
+        android:src="@drawable/ahri_square_0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/champName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:linksClickable="false"
+            android:text="Champion Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/champTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:linksClickable="false"
+            android:text="Champion Title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#111111" />
+
+        <TextView
+            android:id="@+id/champAttributes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:linksClickable="false" />
+
+    </LinearLayout>
+
+</LinearLayout>
