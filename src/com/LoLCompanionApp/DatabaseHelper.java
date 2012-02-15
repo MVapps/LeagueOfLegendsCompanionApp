@@ -180,7 +180,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// run the query
 		cur = database.rawQuery(
-				"SELECT displayName FROM champions ORDER BY displayName ASC", null);
+				"SELECT displayName FROM champions ORDER BY displayName ASC",
+				null);
 
 		// initialize variable
 		result = new String[cur.getCount()];
@@ -300,13 +301,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			for (int i = 0; i < cur.getCount(); i += 1) {
 				// get the two values
 				result[i][0] = "" + cur.getString(cur.getColumnIndex("name"));
-				result[i][1] = ""
-						+ cur.getString(cur.getColumnIndex("description"));
+				result[i][1] = "" + cur.getString(cur.getColumnIndex("effect"));
+				//if the effect column is empty add the text from the description
+				if (result[i][1].equals("null")) {
+					result[i][1] = cur.getString(cur.getColumnIndex("description"));
+				}
 				result[i][2] = "" + cur.getString(cur.getColumnIndex("hotkey"));
 				result[i][3] = "" + cur.getString(cur.getColumnIndex("cost"));
 				result[i][4] = "" + cur.getString(cur.getColumnIndex("range"));
-				result[i][5] = ""
-						+ cur.getString(cur.getColumnIndex("cooldown"));
+				result[i][5] = "" + cur.getString(cur.getColumnIndex("cooldown"));
 				// move to next row
 				cur.moveToNext();
 			}

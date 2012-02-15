@@ -44,16 +44,16 @@ public class ChampionSkills extends Activity {
 
 				// create stats text
 				String stats = "";
-				if (!skills[i][2].equals("null")) {
+				if (!skills[i][2].equals("null") && !skills[i][2].equals("")) {
 					stats += "Type: " + skills[i][2];
 				}
-				if (!skills[i][3].equals("null")) {
+				if (!skills[i][3].equals("null") && !skills[i][3].equals("")) {
 					stats += "\nCost: " + skills[i][3].toLowerCase();
 				}
-				if (!skills[i][4].equals("null")) {
+				if (!skills[i][4].equals("null") && !skills[i][4].equals("")) {
 					stats += "\nRange: " + skills[i][4];
 				}
-				if (!skills[i][5].equals("null")) {
+				if (!skills[i][5].equals("null") && !skills[i][5].equals("")) {
 					stats += "\nCooldown: " + skills[i][5];
 				}
 
@@ -111,7 +111,8 @@ public class ChampionSkills extends Activity {
 			// get the name of the skill, remove formatting and any extra spaces
 			// in front or behind
 			String skillImg = database.removeSpecialChars(
-					textName.getText().toString().trim().replace(" ", "_")).toLowerCase();
+					textName.getText().toString().trim().replace(" ", "_"))
+					.toLowerCase();
 			// special cases
 			if (skillImg.equals("90_caliber_net")) {
 				skillImg = "ninety_caliber_net";
