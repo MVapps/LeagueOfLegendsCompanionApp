@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 public class ChampionSkins extends Activity {
 
-	DatabaseHelper database;
+	DatabaseMain database;
 	static String champion;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champskins);
 
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");

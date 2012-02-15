@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChampionOther extends Activity {
 
 	private String champion;
-	private DatabaseHelper database;
+	private DatabaseMain database;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class ChampionOther extends Activity {
 		
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		createHeader();
 		

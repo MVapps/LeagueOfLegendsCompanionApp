@@ -16,13 +16,13 @@ public class ChampionOptions extends Activity {
 	static final String[] OPTIONS = new String[] { "Guides", "Counterpicks",
 			"Skills", "Other" };
 	static private String champion;
-	DatabaseHelper database;
+	DatabaseMain database;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champinfo);
 
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");

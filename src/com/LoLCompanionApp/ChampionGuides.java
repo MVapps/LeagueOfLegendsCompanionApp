@@ -18,7 +18,7 @@ public class ChampionGuides extends Activity {
 	static final String[] GUIDES = new String[] { "LoLPro", "CLG", "Solomid",
 			"Mobafire" };
 	String champion;
-	DatabaseHelper database;
+	DatabaseMain database;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ChampionGuides extends Activity {
 		setContentView(R.layout.champguides);
 
 		// create database object
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		// Loads Preferences
 		champion = getIntent().getStringExtra("name");

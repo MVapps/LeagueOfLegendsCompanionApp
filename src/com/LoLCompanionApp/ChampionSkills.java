@@ -15,14 +15,14 @@ import android.widget.Toast;
 public class ChampionSkills extends Activity {
 
 	public static ArrayList<HashMap<String, String>> champskills;
-	DatabaseHelper database;
+	DatabaseMain database;
 	String champion;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champskills);
 
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");

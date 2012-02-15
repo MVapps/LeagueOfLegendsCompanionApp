@@ -8,13 +8,13 @@ import android.widget.TextView;
 public class ChampionLore extends Activity {
 
 	private String champion;
-	private DatabaseHelper database;
+	private DatabaseMain database;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champlore);
 
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();

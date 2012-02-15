@@ -26,7 +26,7 @@ public class ChampionList extends Activity {
 
 	private static ArrayList<HashMap<String, String>> champList;
 	private static String[] champs, champTitles;
-	private DatabaseHelper database;
+	private DatabaseMain database;
 	private String viewType;
 	SharedPreferences prefs;
 
@@ -41,7 +41,7 @@ public class ChampionList extends Activity {
 
 		initializeHeader();
 
-		database = new DatabaseHelper(this);
+		database = new DatabaseMain(this, "gameStats_en_US.sqlite");
 
 		champs = database.getAllChampions();
 		champTitles = database.getAllChampionTitles();
