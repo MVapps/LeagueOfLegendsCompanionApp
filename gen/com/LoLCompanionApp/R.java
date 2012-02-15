@@ -130,7 +130,7 @@ public final class R {
         public static final int bulwark=0x7f020074;
         public static final int burning_agony=0x7f020075;
         public static final int burnout=0x7f020076;
-        public static final int bushwhack=0x7f020077;
+        public static final int bushwhack_pounce=0x7f020077;
         public static final int buster_shot=0x7f020078;
         public static final int caitlyn_0=0x7f020079;
         public static final int caitlyn_1=0x7f02007a;
@@ -416,7 +416,7 @@ public final class R {
         public static final int jarvaniv_3=0x7f020192;
         public static final int jarvaniv_4=0x7f020193;
         public static final int jarvaniv_square_0=0x7f020194;
-        public static final int javelin_toss=0x7f020195;
+        public static final int javelin_toss_takedown=0x7f020195;
         public static final int jax_0=0x7f020196;
         public static final int jax_1=0x7f020197;
         public static final int jax_2=0x7f020198;
