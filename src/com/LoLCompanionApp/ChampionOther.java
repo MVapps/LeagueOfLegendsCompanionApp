@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -14,15 +15,18 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChampionOther extends Activity {
 
 	private String champion;
-
+	private DatabaseHelper database;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champother);
-
-		initializeHeader();
+		
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
+		database = new DatabaseHelper(this);
 
+		createHeader();
+		
 		String[] otherInfo = { "Lore", "Skins" };
 
 		// create the list
@@ -38,8 +42,7 @@ public class ChampionOther extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				String choice = ((TextView) view.findViewById(R.id.menuOther))
-						.getText().toString();
+				String choice = (String) ((TextView) view).getText();
 
 				// go to next page based on button pressed
 				Intent Page2 = new Intent();
@@ -67,11 +70,22 @@ public class ChampionOther extends Activity {
 				// startActivity(newPage);
 			}
 		});
+		
+		database.close();
 	}
 
-	public void initializeHeader() {
-		TextView title = (TextView) findViewById(R.id.HeaderTitle);
-		title.setText("General Guides");
-	}
+	private void createHeader() {
+		// Creates header
+		TextView champName = (TextView) findViewById(R.id.champName);
+		TextView champTitle = (TextView) findViewById(R.id.champTitle);
+		ImageView champImage = (ImageView) findViewById(R.id.champPicture);
+		champName.setText(champion);
+		String champPic = database.removeSpecialChars(champion);
+		int path = getResources().getIdentifier(
+				champPic.toLowerCase() + "_square_0", "drawable",
+				"com.LoLCompanionApp");
 
+		champTitle.setText(database.getChampionTitle(champion));
+		champImage.setImageResource(path);
+	}
 }

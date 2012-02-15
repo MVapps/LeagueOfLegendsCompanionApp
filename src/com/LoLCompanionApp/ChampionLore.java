@@ -15,8 +15,6 @@ public class ChampionLore extends Activity {
 		setContentView(R.layout.champlore);
 
 		database = new DatabaseHelper(this);
-
-		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();

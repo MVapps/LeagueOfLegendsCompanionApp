@@ -180,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// run the query
 		cur = database.rawQuery(
-				"SELECT displayName FROM champions ORDER BY name ASC", null);
+				"SELECT displayName FROM champions ORDER BY displayName ASC", null);
 
 		// initialize variable
 		result = new String[cur.getCount()];
@@ -205,7 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// run the query
 		cur = database.rawQuery(
-				"SELECT title FROM champions ORDER BY name ASC", null);
+				"SELECT title FROM champions ORDER BY displayName ASC", null);
 
 		// initialize variable
 		result = new String[cur.getCount()];
