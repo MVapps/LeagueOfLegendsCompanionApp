@@ -122,9 +122,9 @@ public class ChampionList extends Activity {
 	}
 
 	public void changeListType(View view) {
-		
+
 		SharedPreferences.Editor editor = prefs.edit();
-		
+
 		if (viewType.equals("list")) {
 			// change prefs
 			editor.putString("ViewType", "grid");
@@ -133,10 +133,7 @@ public class ChampionList extends Activity {
 			editor.putString("ViewType", "list");
 		}
 
-		if (editor.commit()) {
-			Toast.makeText(this, prefs.getString("ViewType", "nope"),
-					Toast.LENGTH_SHORT).show();
-		}
+		editor.commit();
 
 		// restart screen with new view type
 		finish();
