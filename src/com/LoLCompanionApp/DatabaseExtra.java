@@ -24,39 +24,40 @@ public class DatabaseExtra extends DatabaseHelper {
 	// values.
 	// backup only user-chosen values
 
+	
+	
+	// WHEN DEFAULT TABLE FINISHED, CLONE IT AS usercounteredby TABLE AND USE AS BACKUP
+	// INSETEAD OF CALLING BOTH
+
+	
+	
 	public String[][] getCounteredByChampions(String champ)
 			throws SQLiteException {
 		// get champions that counter the chosen champion
 
 		String[][] result = null;
-		String[] counterTables = new String[] { "defaultcounteredby",
-				"usercounteredby" };
 
 		SQLiteDatabase database = getReadableDatabase();
 
-		for (int j = 0; j < counterTables.length; j += 1) {
-			// run the query and get result
-			Cursor cur = database.rawQuery("SELECT * FROM " + counterTables[j]
-					+ " WHERE champid=\'" + champ.replace("'", "''") + "\'",
-					null);
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT * FROM defaultcounteredby WHERE champid=\'"
+						+ champ.replace("'", "''") + "\'", null);
 
-			// go to first row
-			if (cur.moveToFirst()) {
-				result = new String[cur.getCount()][4];
-				for (int i = 0; i < cur.getCount(); i += 1) {
-					// get the values
-					result[i][0] = ""
-							+ cur.getString(cur.getColumnIndex("counterid"));
-					result[i][1] = ""
-							+ cur.getString(cur.getColumnIndex("description"));
-					result[i][2] = ""
-							+ cur.getString(cur.getColumnIndex("role"));
-					result[i][3] = ""
-							+ cur.getString(cur.getColumnIndex("tips"));
+		// go to first row
+		if (cur.moveToFirst()) {
+			result = new String[cur.getCount()][4];
+			for (int i = 0; i < cur.getCount(); i += 1) {
+				// get the values
+				result[i][0] = ""
+						+ cur.getString(cur.getColumnIndex("counterid"));
+				result[i][1] = ""
+						+ cur.getString(cur.getColumnIndex("description"));
+				result[i][2] = "" + cur.getString(cur.getColumnIndex("role"));
+				result[i][3] = "" + cur.getString(cur.getColumnIndex("tips"));
 
-					// move to next row
-					cur.moveToNext();
-				}
+				// move to next row
+				cur.moveToNext();
 			}
 		}
 
@@ -69,36 +70,30 @@ public class DatabaseExtra extends DatabaseHelper {
 	public String[][] getCounteringChampions(String champ)
 			throws SQLiteException {
 		// get champions that are countered by the champion
-		
+
 		String[][] result = null;
-		String[] counterTables = new String[] { "defaultcounteredby",
-				"usercounteredby" };
 
 		SQLiteDatabase database = getReadableDatabase();
 
-		for (int j = 0; j < counterTables.length; j += 1) {
-			// run the query and get result
-			Cursor cur = database.rawQuery("SELECT * FROM " + counterTables[j]
-					+ " WHERE counterid=\'" + champ.replace("'", "''") + "\'",
-					null);
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT * FROM defaultcounteredby WHERE counterid=\'"
+						+ champ.replace("'", "''") + "\'", null);
 
-			// go to first row
-			if (cur.moveToFirst()) {
-				result = new String[cur.getCount()][4];
-				for (int i = 0; i < cur.getCount(); i += 1) {
-					// get the values
-					result[i][0] = ""
-							+ cur.getString(cur.getColumnIndex("champid"));
-					result[i][1] = ""
-							+ cur.getString(cur.getColumnIndex("description"));
-					result[i][2] = ""
-							+ cur.getString(cur.getColumnIndex("role"));
-					result[i][3] = ""
-							+ cur.getString(cur.getColumnIndex("tips"));
+		// go to first row
+		if (cur.moveToFirst()) {
+			result = new String[cur.getCount()][4];
+			for (int i = 0; i < cur.getCount(); i += 1) {
+				// get the values
+				result[i][0] = ""
+						+ cur.getString(cur.getColumnIndex("champid"));
+				result[i][1] = ""
+						+ cur.getString(cur.getColumnIndex("description"));
+				result[i][2] = "" + cur.getString(cur.getColumnIndex("role"));
+				result[i][3] = "" + cur.getString(cur.getColumnIndex("tips"));
 
-					// move to next row
-					cur.moveToNext();
-				}
+				// move to next row
+				cur.moveToNext();
 			}
 		}
 

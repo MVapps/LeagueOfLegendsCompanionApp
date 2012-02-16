@@ -66,7 +66,6 @@ public class ChampionCounterpicks extends Activity {
 		} else {
 			header.append("\n\nNo information in the database.");
 		}
-
 	}
 
 	private ArrayList<HashMap<String, String>> getHashmap(
