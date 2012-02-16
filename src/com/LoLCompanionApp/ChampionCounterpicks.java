@@ -1,126 +1,154 @@
 package com.LoLCompanionApp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ChampionCounterpicks extends Activity {
 
-	DatabaseMain database;
+	DatabaseMain databaseMain;
+	DatabaseExtra databaseExtra;
 	String champion;
+	SharedPreferences prefs;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champcounterpicks);
 
-		database = new DatabaseMain(this);
+		databaseMain = new DatabaseMain(this);
+		databaseExtra = new DatabaseExtra(this);
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();
+		createButtons();
+		
+		//get the counters page currently being viewed
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String viewCounter = prefs.getString("ViewCounter", "Counters");
 
-		// create temp message
-		// *******************************************
-		TextView text1 = (TextView) findViewById(R.id.textCounters);
-		text1.setBackgroundResource(R.drawable.bgskills);
-		text1.setTextColor(Color.BLACK);
-		text1.setPadding(15, 15, 15, 15);
-		text1.setGravity(Gravity.CENTER);
-		text1.setText("Counterpicks is currently not implemented in this release.");
-		TextView text2 = (TextView) findViewById(R.id.textCountersBy);
-		text2.setText("");
-		// *******************************************
+		//change the text for the page
+		TextView header = (TextView) findViewById(R.id.textCounters);
+		header.setText(viewCounter);
+		
+		//create the list of counters for the page
+		ListView listCounter = (ListView) findViewById(R.id.listCounters);
+		String[][] counter;
 
-		// initializeGalleries();
+		//find the counters in he database
+		if (viewCounter.equals("Counters")) {
+			counter = databaseExtra.getCounteringChampions(champion);
+		} else {
+			counter = databaseExtra.getCounteredByChampions(champion);
+		}
+
+		//if its not null, display the counters
+		if (counter != null) {
+			listCounter.setAdapter(new CounterAdapter(counter,
+					getHashmap(counter)));
+		} else {
+			header.append("\n\nNo information in the database.");
+		}
 
 	}
 
-	// private void initializeGalleries() {
-	// // get the gallery and populate it with the pictures of skins
-	// Gallery counters = (Gallery) findViewById(R.id.galleryCounters);
-	// Gallery countered = (Gallery) findViewById(R.id.galleryCountersBy);
-	//
-	// // array holding the values
-	// String[] countersChamps = database.getChampionCounters(champion);
-	// String[] counteredChamps = database.getChampionCounteredBy(champion);
-	//
-	// Toast.makeText(this, countersChamps[0], Toast.LENGTH_SHORT).show();
-	//
-	// // Counters champs gallery
-	// if (countersChamps != null) {
-	// // Array adapter to display our values in the gallery control
-	// counters.setAdapter(new IconicAdapter(countersChamps));
-	// // set the position of the gallery
-	// setPosition(counters);
-	// } else {
-	// // if no data found
-	// countersChamps = new String[] { "Counters: \nNo data" };
-	// // set the text
-	// TextView text = (TextView) findViewById(R.id.textCounters);
-	// text.setText(countersChamps[0]);
-	// }
-	//
-	// // countered champs gallery
-	// if (counteredChamps != null) {
-	// // Array adapter to display our values in the gallery control
-	// countered.setAdapter(new IconicAdapter(counteredChamps));
-	// // set the position of the gallery
-	// setPosition(countered);
-	// } else {
-	// // if no data found
-	// counteredChamps = new String[] { "Countered By: \nNo data" };
-	// // set the text
-	// TextView text = (TextView) findViewById(R.id.textCountersBy);
-	// text.setText(counteredChamps[0]);
-	// }
-	// }
-	//
-	// private void setPosition(Gallery gal) {
-	// // ensure that the position of the images starts on the left side:
-	// DisplayMetrics metrics = new DisplayMetrics();
-	// getWindowManager().getDefaultDisplay().getMetrics(metrics);
-	//
-	// MarginLayoutParams mlp1 = (MarginLayoutParams) gal.getLayoutParams();
-	// mlp1.setMargins(-(metrics.widthPixels / 2), mlp1.topMargin,
-	// mlp1.rightMargin, mlp1.bottomMargin);
-	// }
-	//
-	// class IconicAdapter extends ArrayAdapter<String> {
-	// String[] champions;
-	//
-	// IconicAdapter(String[] champNames) {
-	// // pass all parameters to the ArayAdapter
-	// super(ChampionCounterpicks.this, R.layout.icon, R.id.champName,
-	// champNames);
-	//
-	// champions = champNames;
-	// }
-	//
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	// View row = super.getView(position, convertView, parent);
-	// ImageView icon = (ImageView) row.findViewById(R.id.champPicture);
-	//
-	// String champ = database.changeSpecialChars(champions[position])
-	// .toLowerCase();
-	//
-	// // get the image path based on the name of the variable being put on
-	// // the screen
-	// int path = getResources().getIdentifier(champ, "drawable",
-	// "com.LoLCompanionApp");
-	//
-	// // if a picture was found
-	// if (path != 0) {
-	// // set the image
-	// icon.setImageResource(path);
-	// }
-	// return (row);
-	// }
-	// }
+	private ArrayList<HashMap<String, String>> getHashmap(
+			String[][] counterArray) {
+		// create a map list that stores the data for each champ
+		ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> map;
+		// add the data to the list
+		for (int i = 0; i < counterArray.length; i += 1) {
+			map = new HashMap<String, String>();
+			map.put("name", counterArray[i][0]);
+			map.put("text", counterArray[i][1]);
+			map.put("role", counterArray[i][2]);
+			map.put("tips", counterArray[i][3]);
+			result.add(map);
+		}
+		return result;
+	}
+
+	private void createButtons() {
+		// Creates Listview
+		GridView gv = (GridView) findViewById(R.id.gridCounterMenu);
+
+		// Creates adapter
+		gv.setAdapter(new ArrayAdapter<String>(this, R.layout.optionlist,
+				new String[] { "Counters", "Countered By" }));
+
+		gv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				String choice = (String) ((TextView) view).getText();
+
+				Editor editor = prefs.edit();
+				editor.putString("ViewCounter", choice);
+				editor.commit();
+
+				// restart screen with new view type
+				finish();
+				startActivity(getIntent());
+			}
+		});
+	}
+
+	class CounterAdapter extends SimpleAdapter {
+
+		String champions[][];
+
+		CounterAdapter(String[][] champs,
+				ArrayList<HashMap<String, String>> hashMap) {
+			// pass all parameters to the ArayAdapter
+			super(getBaseContext(), hashMap, R.layout.counterpickslayout,
+					new String[] { "name", "text", "role", "tips" }, new int[] {
+							R.id.counterChamp, R.id.counterDescription,
+							R.id.counterRole, R.id.counterTips });
+
+			this.champions = champs;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = super.getView(position, convertView, parent);
+			ImageView icon = (ImageView) row.findViewById(R.id.counterChampPic);
+			TextView textName = (TextView) row.findViewById(R.id.counterChamp);
+
+			String champion = textName.getText().toString();
+
+			// convert name to a usable format for finding pictures
+			String champImg = champion.toLowerCase();
+			champImg = databaseMain.removeSpecialChars(champImg);
+			
+			// get the image path based on the name of the variable being put on
+			// the screen
+			int path = getResources().getIdentifier(champImg + "_square_0",
+					"drawable", "com.LoLCompanionApp");
+
+			// if a picture was found
+			if (path != 0) {
+				// set the image
+				icon.setImageResource(path);
+			}
+			return (row);
+		}
+	}
 
 	private void createHeader() {
 		// Creates header
@@ -128,11 +156,12 @@ public class ChampionCounterpicks extends Activity {
 		TextView champTitle = (TextView) findViewById(R.id.champTitle);
 		ImageView champImage = (ImageView) findViewById(R.id.champPicture);
 		champName.setText(champion);
-		String champPic = database.removeSpecialChars(champion);
-		int path = getResources().getIdentifier(champPic.toLowerCase()+"_square_0",
-				"drawable", "com.LoLCompanionApp");
+		String champPic = databaseMain.removeSpecialChars(champion);
+		int path = getResources().getIdentifier(
+				champPic.toLowerCase() + "_square_0", "drawable",
+				"com.LoLCompanionApp");
 
-		champTitle.setText(database.getChampionTitle(champion));
+		champTitle.setText(databaseMain.getChampionTitle(champion));
 		champImage.setImageResource(path);
 	}
 

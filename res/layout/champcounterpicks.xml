@@ -3,13 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <include
         android:id="@+id/champheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1px"
         layout="@layout/champheader" />
+
+    <GridView
+        android:id="@+id/gridCounterMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="2"
+        android:verticalSpacing="1px" >
+    </GridView>
 
     <TextView
         android:id="@+id/textCounters"
@@ -18,28 +28,15 @@
         android:text="Counters:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Gallery
-        android:id="@+id/galleryCounters"
-        android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/listCounters"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:scrollbars="horizontal"
-        android:spacing="15dp" />
-
-    <TextView
-        android:id="@+id/textCountersBy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Countered By:"
-        android:layout_marginTop="30dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Gallery
-        android:id="@+id/galleryCountersBy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:scrollbars="horizontal"
-        android:spacing="15dp" />
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:padding="10dp" >
+    </ListView>
 
 </LinearLayout>
