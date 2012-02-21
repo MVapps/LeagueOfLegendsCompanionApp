@@ -23,6 +23,14 @@ public class ChampionCounterpicksDelete extends Activity {
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();
+		
+		
+		
+	}
+	
+	private void deleteCounterInformation(View view)
+	{
+		
 	}
 
 	private void createHeader() {

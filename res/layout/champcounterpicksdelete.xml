@@ -11,4 +11,30 @@
         android:layout_marginBottom="1px"
         layout="@layout/champheader" />
 
+    <TextView
+        android:id="@+id/textDeleteCounters"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Champion Counters"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/listCounters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/textDeleteCounteredBy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Countering Champions"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/listCountering"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
 </LinearLayout>

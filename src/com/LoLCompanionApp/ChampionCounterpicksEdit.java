@@ -84,7 +84,7 @@ public class ChampionCounterpicksEdit extends Activity {
 	}
 
 	public void addNewCounter(View view) {
-		// get all values inputted into the fields
+		// get all values inputed into the fields
 		String counter = ((AutoCompleteTextView) findViewById(R.id.autoCompleteCountersName))
 				.getText().toString();
 		String champ = ((AutoCompleteTextView) findViewById(R.id.autoCompleteChampionName))
