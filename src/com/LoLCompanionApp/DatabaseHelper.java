@@ -1,11 +1,12 @@
 package com.LoLCompanionApp;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -30,27 +31,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		super(context, dbName, null, 1);
 		this.myContext = context;
 		DB_NAME = dbName;
+		
+		initializeDatabase();
+	}
 
+	public void initializeDatabase() {
 		try {
-
 			createDataBase();
-
 		} catch (IOException ioe) {
-
 			throw new Error("Unable to create database");
-
 		}
 
 		try {
-
 			openDataBase();
-
 		} catch (SQLException sqle) {
-
 			throw sqle;
-
 		}
-
 	}
 
 	/**
@@ -169,6 +165,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (checkDataBase()) {
+			String path = DB_PATH + DB_NAME;
 
+			// delete the database
+			File file = new File(path);
+			boolean deleted = file.delete();
+
+			// pass in new database
+			initializeDatabase();
+		}
 	}
 }

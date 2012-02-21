@@ -84,6 +84,7 @@ public class ChampionCounterpicksEdit extends Activity {
 	}
 
 	public void addNewCounter(View view) {
+		// get all values inputted into the fields
 		String counter = ((AutoCompleteTextView) findViewById(R.id.autoCompleteCountersName))
 				.getText().toString();
 		String champ = ((AutoCompleteTextView) findViewById(R.id.autoCompleteChampionName))
@@ -95,12 +96,33 @@ public class ChampionCounterpicksEdit extends Activity {
 		String description = ((EditText) findViewById(R.id.editDescription))
 				.getText().toString();
 
-		databaseExtra.addNewCounter(counter, champ, role, tips, description);
+		if (counter.equals("")) {
+			Toast.makeText(this, "Please provide a Champion.",
+					Toast.LENGTH_LONG).show();
+		} else if (champ.equals("")) {
+			Toast.makeText(this, "Please provide a Counter champion.",
+					Toast.LENGTH_LONG).show();
+		} else if (role.equals("")) {
+			Toast.makeText(this, "Please provide a Role.", Toast.LENGTH_LONG)
+					.show();
+		} else if (description.equals("")) {
+			Toast.makeText(this, "Please provide a Description.",
+					Toast.LENGTH_LONG).show();
+		} else {
+			// add values to database
+			databaseExtra
+					.addNewCounter(counter, champ, role, tips, description);
 
-		Toast.makeText(
-				this,
-				"New counter information has been added:\n" + counter
-						+ " counters " + champ, Toast.LENGTH_SHORT).show();
+			// notify user that values were added
+			Toast.makeText(
+					this,
+					"New counter information has been added:\n" + counter
+							+ " counters " + champ, Toast.LENGTH_LONG).show();
+
+			// restart the page to clear the screen
+			finish();
+			startActivity(getIntent());
+		}
 	}
 
 	public void deleteCounters(View view) {

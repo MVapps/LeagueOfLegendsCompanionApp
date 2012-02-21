@@ -1,5 +1,7 @@
 package com.LoLCompanionApp;
 
+import java.io.File;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,10 +20,17 @@ public class DatabaseExtra extends DatabaseHelper {
 		mainDB = new DatabaseMain(context);
 	}
 
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		backupUserCounters();
+		super.onUpgrade(db, oldVersion, newVersion);
+		importUserCounters();
+	}
+	
 	// WHEN DEFAULT TABLE FINISHED, CLONE IT AS usercounteredby TABLE AND USE AS
 	// BACKUP
 	// INSETEAD OF CALLING BOTH
-
+	
 	public String[][] getCounteredByChampions(String champ)
 			throws SQLiteException {
 		// get champions that counter the chosen champion
@@ -142,11 +151,11 @@ public class DatabaseExtra extends DatabaseHelper {
 	}
 
 	public void backupUserCounters() throws SQLiteException {
-
+		
 	}
 
 	public void importUserCounters() throws SQLiteException {
-
+		
 	}
 
 }
