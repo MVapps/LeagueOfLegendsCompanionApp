@@ -1,5 +1,6 @@
 package com.LoLCompanionApp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,8 @@ import android.database.sqlite.SQLiteException;
 public class DatabaseExtra extends DatabaseHelper {
 
 	DatabaseMain mainDB;
+	final String USER_COUNTER_TABLE = "usercounteredby";
+	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
 
 	public DatabaseExtra(Context context) {
 		super(context, "extrainfo.sqlite");
@@ -15,22 +18,10 @@ public class DatabaseExtra extends DatabaseHelper {
 		mainDB = new DatabaseMain(context);
 	}
 
-	// have one database with who counters who.
-	// have function to backup the values (in case they added their own values
-	// they want to keep when the database is updated with new champions)
-	// "Bob" counters "Steve"
-	// have import function to import counters from previous versions.
-	// have two tables. One with default values, one with updated user-chosen
-	// values.
-	// backup only user-chosen values
-
-	
-	
-	// WHEN DEFAULT TABLE FINISHED, CLONE IT AS usercounteredby TABLE AND USE AS BACKUP
+	// WHEN DEFAULT TABLE FINISHED, CLONE IT AS usercounteredby TABLE AND USE AS
+	// BACKUP
 	// INSETEAD OF CALLING BOTH
 
-	
-	
 	public String[][] getCounteredByChampions(String champ)
 			throws SQLiteException {
 		// get champions that counter the chosen champion
@@ -40,9 +31,8 @@ public class DatabaseExtra extends DatabaseHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
-		Cursor cur = database.rawQuery(
-				"SELECT * FROM defaultcounteredby WHERE champid=\'"
-						+ champ.replace("'", "''") + "\'", null);
+		Cursor cur = database.rawQuery("SELECT * FROM " + DEFAULT_COUNTER_TABLE
+				+ " WHERE champid=\'" + champ.replace("'", "''") + "\'", null);
 
 		// go to first row
 		if (cur.moveToFirst()) {
@@ -76,9 +66,10 @@ public class DatabaseExtra extends DatabaseHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
-		Cursor cur = database.rawQuery(
-				"SELECT * FROM defaultcounteredby WHERE counterid=\'"
-						+ champ.replace("'", "''") + "\'", null);
+		Cursor cur = database
+				.rawQuery("SELECT * FROM " + DEFAULT_COUNTER_TABLE
+						+ " WHERE counterid=\'" + champ.replace("'", "''")
+						+ "\'", null);
 
 		// go to first row
 		if (cur.moveToFirst()) {
@@ -100,6 +91,62 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 
 		return result;
+	}
+
+	public void deleteAllCounters() throws SQLiteException {
+		SQLiteDatabase database = getWritableDatabase();
+
+		// clear all rows from table
+		database.delete(USER_COUNTER_TABLE, null, null);
+
+		database.close();
+	}
+
+	public void restoreDefaultCounters() throws SQLiteException {
+		SQLiteDatabase database = getWritableDatabase();
+
+		// clear all rows from table
+		database.execSQL("DROP TABLE IF EXISTS " + USER_COUNTER_TABLE);
+		database.execSQL("CREATE TABLE " + USER_COUNTER_TABLE
+				+ " AS SELECT id,champid,counterid,description,role,tips FROM "
+				+ DEFAULT_COUNTER_TABLE);
+
+		database.close();
+	}
+
+	public void deleteCounter(String counter, String champ)
+			throws SQLiteException {
+		SQLiteDatabase database = getWritableDatabase();
+
+		database.delete(USER_COUNTER_TABLE, "counterid=\'" + counter
+				+ "\' && champid=\'" + champ + "\'", null);
+
+		database.close();
+	}
+
+	public void addNewCounter(String counter, String champ, String role,
+			String tips, String description) throws SQLiteException {
+		SQLiteDatabase database = getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("champid", champ);
+		values.put("counterid", counter);
+		values.put("role", role);
+		values.put("tips", tips);
+		values.put("description", description);
+
+		// insert the new drink into the database
+		database.insert(USER_COUNTER_TABLE, null, values);
+
+		database.close();
+	}
+
+	public void backupUserCounters() throws SQLiteException {
+
+	}
+
+	public void importUserCounters() throws SQLiteException {
+
 	}
 
 }

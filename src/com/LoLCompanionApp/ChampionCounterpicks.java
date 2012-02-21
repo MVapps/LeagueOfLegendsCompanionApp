@@ -39,27 +39,27 @@ public class ChampionCounterpicks extends Activity {
 
 		createHeader();
 		createButtons();
-		
-		//get the counters page currently being viewed
+
+		// get the counters page currently being viewed
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String viewCounter = prefs.getString("ViewCounter", "Counters");
 
-		//change the text for the page
+		// change the text for the page
 		TextView header = (TextView) findViewById(R.id.textCounters);
 		header.setText(viewCounter);
-		
-		//create the list of counters for the page
+
+		// create the list of counters for the page
 		ListView listCounter = (ListView) findViewById(R.id.listCounters);
 		String[][] counter;
 
-		//find the counters in he database
+		// find the counters in he database
 		if (viewCounter.equals("Counters")) {
 			counter = databaseExtra.getCounteringChampions(champion);
 		} else {
 			counter = databaseExtra.getCounteredByChampions(champion);
 		}
 
-		//if its not null, display the counters
+		// if its not null, display the counters
 		if (counter != null) {
 			listCounter.setAdapter(new CounterAdapter(counter,
 					getHashmap(counter)));
@@ -78,11 +78,20 @@ public class ChampionCounterpicks extends Activity {
 			map = new HashMap<String, String>();
 			map.put("name", counterArray[i][0]);
 			map.put("text", counterArray[i][1]);
-			map.put("role", counterArray[i][2]);
+			map.put("role", "Role: " + counterArray[i][2]);
 			map.put("tips", counterArray[i][3]);
 			result.add(map);
 		}
 		return result;
+	}
+
+	public void editCounters(View view) {
+		// go to next page on button pressed
+		Intent editPage = new Intent();
+		editPage.setClassName("com.LoLCompanionApp",
+				"com.LoLCompanionApp.ChampionCounterpicksEdit");
+		editPage.putExtra("name", champion);
+		startActivity(editPage);
 	}
 
 	private void createButtons() {
@@ -96,15 +105,19 @@ public class ChampionCounterpicks extends Activity {
 		gv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				// get button choice
 				String choice = (String) ((TextView) view).getText();
 
-				Editor editor = prefs.edit();
-				editor.putString("ViewCounter", choice);
-				editor.commit();
+				// if the choice is already selected do not restart the activity
+				if (!choice.equals(prefs.getString("ViewCounter", "Counters"))) {
+					Editor editor = prefs.edit();
+					editor.putString("ViewCounter", choice);
+					editor.commit();
 
-				// restart screen with new view type
-				finish();
-				startActivity(getIntent());
+					// restart screen with new view type
+					finish();
+					startActivity(getIntent());
+				}
 			}
 		});
 	}
@@ -134,7 +147,7 @@ public class ChampionCounterpicks extends Activity {
 			// convert name to a usable format for finding pictures
 			String champImg = champion.toLowerCase();
 			champImg = databaseMain.removeSpecialChars(champImg);
-			
+
 			// get the image path based on the name of the variable being put on
 			// the screen
 			int path = getResources().getIdentifier(champImg + "_square_0",

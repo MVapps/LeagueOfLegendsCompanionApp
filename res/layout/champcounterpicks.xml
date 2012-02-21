@@ -21,6 +21,19 @@
         android:verticalSpacing="1px" >
     </GridView>
 
+    <Button
+        android:id="@+id/counterEdit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="editCounters"
+        android:padding="13dp"
+        android:text="Edit Counters"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
     <TextView
         android:id="@+id/textCounters"
         android:layout_width="match_parent"
