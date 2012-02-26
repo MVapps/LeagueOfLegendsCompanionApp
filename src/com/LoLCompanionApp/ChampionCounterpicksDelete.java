@@ -109,7 +109,7 @@ public class ChampionCounterpicksDelete extends Activity {
 		CounterListAdapter(ArrayList<HashMap<String, String>> hashMap) {
 			// pass all parameters to the ArayAdapter
 			super(getBaseContext(), hashMap, R.layout.quickchampcounterlist,
-					new String[] { "name", "counter", "details" }, new int[] {
+					new String[] { "champ", "counter", "details" }, new int[] {
 							R.id.deleteCounteredChamp, R.id.deleteCounterChamp,
 							R.id.deleteDetails });
 		}
@@ -131,12 +131,12 @@ public class ChampionCounterpicksDelete extends Activity {
 			// the screen
 			int pathCounter = getResources().getIdentifier(
 					databaseMain.removeSpecialChars(counterChamp.getText()
-							.toString()) + "_square_0", "drawable",
+							.toString()).toLowerCase().replace(" ", "") + "_square_0", "drawable",
 					"com.LoLCompanionApp");
 
 			int pathCountered = getResources().getIdentifier(
 					databaseMain.removeSpecialChars(counteredChamp.getText()
-							.toString()) + "_square_0", "drawable",
+							.toString()).toLowerCase().replace(" ", "") + "_square_0", "drawable",
 					"com.LoLCompanionApp");
 
 			// if a picture was found
