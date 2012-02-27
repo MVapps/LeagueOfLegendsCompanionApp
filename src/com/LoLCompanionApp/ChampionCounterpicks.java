@@ -40,16 +40,8 @@ public class ChampionCounterpicks extends Activity {
 		createHeader();
 		createButtons();
 
-		// get the perferences
+		// get the counters page currently being viewed
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	}
-	
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		
-		//get the page preferences
 		String viewCounter = prefs.getString("ViewCounter", "Counters");
 
 		// change the text for the page
