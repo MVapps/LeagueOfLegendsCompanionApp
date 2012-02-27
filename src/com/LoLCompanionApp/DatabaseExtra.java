@@ -13,11 +13,13 @@ public class DatabaseExtra extends DatabaseHelper {
 	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
-
+	final Context context;
+	
 	public DatabaseExtra(Context context) {
 		super(context, "extrainfo.sqlite");
 
 		mainDB = new DatabaseMain(context);
+		this.context = context;
 	}
 
 	@Override
@@ -125,15 +127,11 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public void deleteCounter(String counter, String champ, String description)
-			throws SQLiteException {
+	public void deleteCounter(String id) throws SQLiteException {
 		SQLiteDatabase database = getWritableDatabase();
 
-		database.delete(
-				USER_COUNTER_TABLE,
-				"counterid='" + counter.replace("'", "''") + "' AND champid='"
-						+ champ.replace("'", "''") + "' AND id='"
-						+ description.replace("'", "''") + "'", null);
+		database.delete(USER_COUNTER_TABLE, "id='" + id.replace("'", "''")
+				+ "'", null);
 
 		database.close();
 	}

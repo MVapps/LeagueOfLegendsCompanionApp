@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		super(context, dbName, null, 1);
 		this.myContext = context;
 		DB_NAME = dbName;
-		
+
 		initializeDatabase();
 	}
 
@@ -68,16 +68,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			this.getReadableDatabase();
 
 			try {
-
 				copyDataBase();
-
 			} catch (IOException e) {
-
 				throw new Error("Error copying database");
-
 			}
 		}
-
 	}
 
 	/**
@@ -146,7 +141,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String myPath = DB_PATH + DB_NAME;
 		myDataBase = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
-
 	}
 
 	@Override

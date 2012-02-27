@@ -43,13 +43,12 @@ public class ChampionCounterpicks extends Activity {
 		// get the perferences
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 	}
-	
+
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
-		
-		//get the page preferences
+
+		// get the page preferences
 		String viewCounter = prefs.getString("ViewCounter", "Counters");
 
 		// change the text for the page
@@ -73,16 +72,16 @@ public class ChampionCounterpicks extends Activity {
 					getHashmap(counter)));
 		} else {
 			header.append("\n\nNo information in the database.");
+			listCounter.setAdapter(null);
 		}
 	}
 
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		super.onPause();
 		databaseExtra.close();
 	}
-	
+
 	private ArrayList<HashMap<String, String>> getHashmap(
 			String[][] counterArray) {
 		// create a map list that stores the data for each champ

@@ -41,17 +41,11 @@ public class ChampionCounterpicksDelete extends Activity {
 		// and then that parent (listview)
 		ListView listRow = (ListView) deleteButton.getParent().getParent();
 
-		// find the views in the row of the lsit view, and get the text.
-		String counteringChamp = ((TextView) listRow
-				.findViewById(R.id.deleteCounterChamp)).getText().toString();
-		String counteredChamp = ((TextView) listRow
-				.findViewById(R.id.deleteCounteredChamp)).getText().toString();
-		String counterId = ((TextView) listRow
-				.findViewById(R.id.deleteId)).getText().toString();
+		String counterId = ((TextView) listRow.findViewById(R.id.deleteId))
+				.getText().toString();
 
 		// delete the champion information from the database
-		databaseExtra.deleteCounter(counteringChamp, counteredChamp,
-				counterId);
+		databaseExtra.deleteCounter(counterId);
 
 		Toast.makeText(this,
 				"Champion counter infromation deleted from database.",
