@@ -89,7 +89,7 @@ public class ChampionCounterpicks extends Activity {
 		// go to next page on button pressed
 		Intent editPage = new Intent();
 		editPage.setClassName("com.LoLCompanionApp",
-				"com.LoLCompanionApp.ChampionCounterpicksEdit");
+				"com.LoLCompanionApp.ChampionCounterpicksEditMenu");
 		editPage.putExtra("name", champion);
 		startActivity(editPage);
 	}

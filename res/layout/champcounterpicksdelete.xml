@@ -12,29 +12,16 @@
         layout="@layout/champheader" />
 
     <TextView
-        android:id="@+id/textDeleteCounteringBy"
+        android:id="@+id/textDeleteCounters"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Delete Champion Counters"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
-        android:id="@+id/listCountering"
+        android:id="@+id/listCounterArray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-
-    <TextView
-        android:id="@+id/textDeleteCounters"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Countering Champions"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ListView
-        android:id="@+id/listCounters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent" >
     </ListView>
 
 </LinearLayout>

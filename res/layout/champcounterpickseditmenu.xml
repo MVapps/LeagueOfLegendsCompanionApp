@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/champheader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        layout="@layout/champheader" />
+    
+    <Button
+        android:id="@+id/counterAddNew"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="addCounters"
+        android:padding="15dp"
+        android:text="Add New Champion Counters"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    <Button
+        android:id="@+id/counterDelete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="deleteCounters"
+        android:padding="15dp"
+        android:tag="countering"
+        android:text="Delete Champion Counters"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/counteredDelete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="deleteCounters"
+        android:padding="15dp"
+        android:tag="countered"
+        android:text="Delete Countering Champions"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    <!--
+    
+    <Button
+        android:id="@+id/counterDefault"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="addCounters"
+        android:padding="15dp"
+        android:tag="countering"
+        android:text="Restore Counters to Default"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    <Button
+        android:id="@+id/counterBackup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="addCounters"
+        android:padding="15dp"
+        android:tag="countering"
+        android:text="Backup Custom Counters"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    <Button
+        android:id="@+id/counterRestore"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="addCounters"
+        android:padding="15dp"
+        android:tag="countering"
+        android:text="Restore Counters From File"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    -->
+
+</LinearLayout>

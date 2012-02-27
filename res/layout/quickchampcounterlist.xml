@@ -12,92 +12,86 @@
         android:onClick="deleteCounterInformation"
         android:text="DELETE" />
 
-    <RelativeLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:id="@+id/linearLayout3"
+            android:id="@+id/LinearLayout01"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:id="@+id/LinearLayout01"
+            <ImageView
+                android:id="@+id/imageCounterChamp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <ImageView
-                    android:id="@+id/imageCounterChamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:linksClickable="false"
-                    android:maxHeight="25dp"
-                    android:maxWidth="25dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ahri_square_0" />
-
-                <TextView
-                    android:id="@+id/deleteCounterChamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:linksClickable="false"
-                    android:text="Champion Name"
-                    android:typeface="serif" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:linksClickable="false"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ahri_square_0" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/deleteCounterChamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" Counters " />
-
-            <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <ImageView
-                    android:id="@+id/imageCounteredChamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:linksClickable="false"
-                    android:maxHeight="25dp"
-                    android:maxWidth="25dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ahri_square_0" />
-
-                <TextView
-                    android:id="@+id/deleteCounteredChamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:linksClickable="false"
-                    android:text="Champion Name"
-                    android:typeface="serif" />
-            </LinearLayout>
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:linksClickable="false"
+                android:text="Champion Name"
+                android:typeface="serif" />
         </LinearLayout>
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=" counters " />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/imageCounteredChamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:linksClickable="false"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ahri_square_0" />
+
+            <TextView
+                android:id="@+id/deleteCounteredChamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:linksClickable="false"
+                android:text="Champion Name"
+                android:typeface="serif" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/deleteDetails"

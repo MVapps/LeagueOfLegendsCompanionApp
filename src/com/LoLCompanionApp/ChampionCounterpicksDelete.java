@@ -13,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ChampionCounterpicksDelete extends Activity {
 
 	DatabaseMain databaseMain;
 	DatabaseExtra databaseExtra;
-	String champion;
+	String champion, page;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,38 +30,51 @@ public class ChampionCounterpicksDelete extends Activity {
 
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
+		page = getIntent().getStringExtra("page");
 
 		createHeader();
 
 		populateLists();
 	}
 
-	private void deleteCounterInformation(View view) {
+	public void deleteCounterInformation(View championListView) {
+		String counteringChamp = ((TextView) championListView
+				.findViewById(R.id.deleteCounterChamp)).getText().toString();
+		String counteredChamp = ((TextView) championListView
+				.findViewById(R.id.deleteCounteredChamp)).getText().toString();
 
+		// delete the champion information from the database
+		databaseExtra.deleteCounter(counteringChamp, counteredChamp);
+		
+		Toast.makeText(this,
+				"Champion counter infromation deleted from database.",
+				Toast.LENGTH_SHORT).show();
+
+		// restart screen
+		finish();
+		startActivity(getIntent());
 	}
 
 	public void populateLists() {
-		ListView listCounteredBy = (ListView) findViewById(R.id.listCounters);
-		ListView listCountering = (ListView) findViewById(R.id.listCountering);
+		ListView listCounter = (ListView) findViewById(R.id.listCounterArray);
+		String[][] counterListArray;
 
-		String[][] counteredBy = databaseExtra.getCounteredByChampions(champion);
-		String[][] countering = databaseExtra.getCounteringChampions(champion);
-
-		if (countering != null) {
-			listCountering.setAdapter( new CounterListAdapter(getHashmap(countering, "countering")));
+		if (page.equals("countering")) {
+			counterListArray = databaseExtra.getCounteringChampions(champion);
 		} else {
-			// header.append("\n\nNo information in the database.");
+			counterListArray = databaseExtra.getCounteredByChampions(champion);
 		}
-		
-		if (counteredBy != null) {
-			listCounteredBy.setAdapter( new CounterListAdapter(getHashmap(counteredBy, "countered")));
+
+		if (counterListArray != null) {
+			listCounter.setAdapter(new CounterListAdapter(
+					getHashmap(counterListArray)));
 		} else {
 			// header.append("\n\nNo information in the database.");
 		}
 	}
 
 	private ArrayList<HashMap<String, String>> getHashmap(
-			String[][] counterArray, String type) {
+			String[][] counterArray) {
 		// create a map list that stores the data for each champ
 		ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> map;
@@ -70,7 +84,7 @@ public class ChampionCounterpicksDelete extends Activity {
 
 			// depending on type of list, change values for countering and
 			// countered by
-			if (type.equals("countering")) {
+			if (page.equals("countering")) {
 				map.put("champ", counterArray[i][0]);
 				map.put("counter", champion);
 			} else {
@@ -130,14 +144,18 @@ public class ChampionCounterpicksDelete extends Activity {
 			// get the image path based on the name of the variable being put on
 			// the screen
 			int pathCounter = getResources().getIdentifier(
-					databaseMain.removeSpecialChars(counterChamp.getText()
-							.toString()).toLowerCase().replace(" ", "") + "_square_0", "drawable",
-					"com.LoLCompanionApp");
+					databaseMain
+							.removeSpecialChars(
+									counterChamp.getText().toString())
+							.toLowerCase().replace(" ", "")
+							+ "_square_0", "drawable", "com.LoLCompanionApp");
 
 			int pathCountered = getResources().getIdentifier(
-					databaseMain.removeSpecialChars(counteredChamp.getText()
-							.toString()).toLowerCase().replace(" ", "") + "_square_0", "drawable",
-					"com.LoLCompanionApp");
+					databaseMain
+							.removeSpecialChars(
+									counteredChamp.getText().toString())
+							.toLowerCase().replace(" ", "")
+							+ "_square_0", "drawable", "com.LoLCompanionApp");
 
 			// if a picture was found
 			if (pathCounter != 0) {
