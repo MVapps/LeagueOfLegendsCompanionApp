@@ -67,6 +67,13 @@ public class ChampionCounterpicks extends Activity {
 			header.append("\n\nNo information in the database.");
 		}
 	}
+	
+	@Override
+	public void onResume()
+	{
+		finish();
+		startActivity(getIntent());
+	}
 
 	private ArrayList<HashMap<String, String>> getHashmap(
 			String[][] counterArray) {

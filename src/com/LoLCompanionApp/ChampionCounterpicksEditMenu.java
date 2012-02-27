@@ -16,15 +16,15 @@ public class ChampionCounterpicksEditMenu extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.champcounterpickseditmenu);
-		
+
 		databaseMain = new DatabaseMain(this);
 		databaseExtra = new DatabaseExtra(this);
-		
+
 		// get the name of the chosen champion
 		champion = getIntent().getStringExtra("name");
-		
+
 		createHeader();
-		
+
 	}
 
 	public void deleteCounters(View view) {
@@ -36,14 +36,21 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		deletePage.putExtra("page", view.getTag().toString());
 		startActivity(deletePage);
 	}
-	
-	public void addCounters(View button)
-	{
+
+	public void addCounters(View button) {
 		Intent addNewPage = new Intent();
 		addNewPage.setClassName("com.LoLCompanionApp",
 				"com.LoLCompanionApp.ChampionCounterpicksAdd");
 		addNewPage.putExtra("name", champion);
 		startActivity(addNewPage);
+	}
+
+	public void deaultCounters(View button) {
+		databaseExtra.restoreDefaultCounters();
+
+		// restart screen
+		finish();
+		startActivity(getIntent());
 	}
 
 	private void createHeader() {

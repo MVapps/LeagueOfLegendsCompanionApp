@@ -3,12 +3,11 @@ package com.LoLCompanionApp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.LoLCompanionApp.ChampionCounterpicks.CounterAdapter;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -37,15 +36,23 @@ public class ChampionCounterpicksDelete extends Activity {
 		populateLists();
 	}
 
-	public void deleteCounterInformation(View championListView) {
-		String counteringChamp = ((TextView) championListView
+	public void deleteCounterInformation(View deleteButton) {
+		// get the parent of the button (linearlayout),
+		// and then that parent (listview)
+		ListView listRow = (ListView) deleteButton.getParent().getParent();
+
+		// find the views in the row of the lsit view, and get the text.
+		String counteringChamp = ((TextView) listRow
 				.findViewById(R.id.deleteCounterChamp)).getText().toString();
-		String counteredChamp = ((TextView) championListView
+		String counteredChamp = ((TextView) listRow
 				.findViewById(R.id.deleteCounteredChamp)).getText().toString();
+		String counterId = ((TextView) listRow
+				.findViewById(R.id.deleteId)).getText().toString();
 
 		// delete the champion information from the database
-		databaseExtra.deleteCounter(counteringChamp, counteredChamp);
-		
+		databaseExtra.deleteCounter(counteringChamp, counteredChamp,
+				counterId);
+
 		Toast.makeText(this,
 				"Champion counter infromation deleted from database.",
 				Toast.LENGTH_SHORT).show();
@@ -94,6 +101,7 @@ public class ChampionCounterpicksDelete extends Activity {
 			map.put("details", "Role: " + counterArray[i][2]
 					+ "\nDescription: " + counterArray[i][1] + "\nTips: "
 					+ counterArray[i][3]);
+			map.put("id", counterArray[i][4]);
 			result.add(map);
 		}
 		return result;
@@ -123,9 +131,10 @@ public class ChampionCounterpicksDelete extends Activity {
 		CounterListAdapter(ArrayList<HashMap<String, String>> hashMap) {
 			// pass all parameters to the ArayAdapter
 			super(getBaseContext(), hashMap, R.layout.quickchampcounterlist,
-					new String[] { "champ", "counter", "details" }, new int[] {
-							R.id.deleteCounteredChamp, R.id.deleteCounterChamp,
-							R.id.deleteDetails });
+					new String[] { "champ", "counter", "details", "id" },
+					new int[] { R.id.deleteCounteredChamp,
+							R.id.deleteCounterChamp, R.id.deleteDetails,
+							R.id.deleteId });
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -169,5 +178,6 @@ public class ChampionCounterpicksDelete extends Activity {
 
 			return (row);
 		}
+
 	}
 }
