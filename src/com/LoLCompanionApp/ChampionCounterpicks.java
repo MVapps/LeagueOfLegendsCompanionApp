@@ -40,8 +40,16 @@ public class ChampionCounterpicks extends Activity {
 		createHeader();
 		createButtons();
 
-		// get the counters page currently being viewed
+		// get the perferences
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		
+		//get the page preferences
 		String viewCounter = prefs.getString("ViewCounter", "Counters");
 
 		// change the text for the page
@@ -68,6 +76,13 @@ public class ChampionCounterpicks extends Activity {
 		}
 	}
 
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		databaseExtra.close();
+	}
+	
 	private ArrayList<HashMap<String, String>> getHashmap(
 			String[][] counterArray) {
 		// create a map list that stores the data for each champ

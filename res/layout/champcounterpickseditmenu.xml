@@ -61,8 +61,20 @@
         android:gravity="center"
         android:onClick="deaultCounters"
         android:padding="15dp"
-        android:tag="countering"
-        android:text="Restore Counters to Default"
+        android:text="Restore All Counters to Default"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    
+    <Button
+        android:id="@+id/counterDeleteAll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/bglist"
+        android:gravity="center"
+        android:onClick="deleteAllCounters"
+        android:padding="15dp"
+        android:text="Delete All Counters"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
     

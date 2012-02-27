@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ChampionCounterpicksEditMenu extends Activity {
 
@@ -48,9 +49,8 @@ public class ChampionCounterpicksEditMenu extends Activity {
 	public void deaultCounters(View button) {
 		databaseExtra.restoreDefaultCounters();
 
-		// restart screen
-		finish();
-		startActivity(getIntent());
+		//inform user of changes
+		Toast.makeText(this, "Counters restored to default.", Toast.LENGTH_SHORT).show();
 	}
 
 	private void createHeader() {
