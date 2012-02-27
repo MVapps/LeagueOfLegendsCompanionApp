@@ -52,6 +52,13 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		//inform user of changes
 		Toast.makeText(this, "Counters restored to default.", Toast.LENGTH_SHORT).show();
 	}
+	
+	public void deleteAllCounters(View button) {
+		databaseExtra.deleteAllCounters();
+
+		//inform user of changes
+		Toast.makeText(this, "All counters have been deleted.", Toast.LENGTH_SHORT).show();
+	}
 
 	private void createHeader() {
 		// Creates header
