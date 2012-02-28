@@ -25,7 +25,6 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		champion = getIntent().getStringExtra("name");
 
 		createHeader();
-
 	}
 
 	public void deleteCounters(View view) {

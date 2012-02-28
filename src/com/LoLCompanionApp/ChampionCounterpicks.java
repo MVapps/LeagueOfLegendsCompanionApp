@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -71,7 +72,10 @@ public class ChampionCounterpicks extends Activity {
 			listCounter.setAdapter(new CounterAdapter(counter,
 					getHashmap(counter)));
 		} else {
-			header.append("\n\nNo information in the database.");
+			header.setText("No information in the database.");
+			header.setPadding(20, 20, 20, 20);
+			header.setGravity(Gravity.CENTER);
+			header.setBackgroundResource(R.drawable.bgskills);
 			listCounter.setAdapter(null);
 		}
 	}
