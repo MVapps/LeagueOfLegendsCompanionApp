@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Environment;
 
 public class DatabaseExtra extends DatabaseHelper {
 
 	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
-	final String BACKUP_PATH = "";
 	final Context context;
 
 	public DatabaseExtra(Context context) {
@@ -152,12 +152,21 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public void backupUserCounters() throws SQLiteException {
+	public boolean backupUserCounters() throws SQLiteException {
+		String backupPath = Environment.getExternalStorageDirectory()
+				.toString() + "/LoLCompanionApp Backup/";
+		
+		SQLiteDatabase database = getReadableDatabase();
 
+		
+		
+		database.close();
+		return false;
 	}
 
-	public void importUserCounters() throws SQLiteException {
+	public boolean importUserCounters() throws SQLiteException {
 
+		return false;
 	}
 
 }

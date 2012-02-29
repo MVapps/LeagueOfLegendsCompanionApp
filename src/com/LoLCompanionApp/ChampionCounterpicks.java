@@ -78,7 +78,7 @@ public class ChampionCounterpicks extends Activity {
 			listCounter.setAdapter(new CounterAdapter(counter,
 					getHashmap(counter)));
 		} else {
-			header.setText("No information in the database.");
+			header.append("\nNo information in the database.");
 			header.setPadding(20, 20, 20, 20);
 			header.setGravity(Gravity.CENTER);
 			header.setBackgroundResource(R.drawable.bgskills);

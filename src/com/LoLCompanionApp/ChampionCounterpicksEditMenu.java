@@ -3,6 +3,7 @@ package com.LoLCompanionApp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,11 +63,24 @@ public class ChampionCounterpicksEditMenu extends Activity {
 	}
 
 	public void backupCounters(View button) {
-
+		if (databaseExtra.backupUserCounters()) {
+			Toast.makeText(this, "Backup succesful to SD card.",
+					Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, "Backup was not succesful.", Toast.LENGTH_LONG)
+					.show();
+		}
 	}
 
 	public void restoreCounters() {
-
+		if (databaseExtra.importUserCounters()) {
+			Toast.makeText(this, "Database import sucessful.",
+					Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this,
+					"There was a problem with importing the user dataabse..",
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	private void createHeader() {

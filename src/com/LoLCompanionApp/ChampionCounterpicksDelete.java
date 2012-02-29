@@ -2,11 +2,13 @@ package com.LoLCompanionApp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -35,13 +37,12 @@ public class ChampionCounterpicksDelete extends Activity {
 	}
 
 	public void deleteCounterInformation(View deleteButton) {
-		// get the parent of the button (linearlayout),
-		// and then that parent (listview)
-		ListView listRow = (ListView) deleteButton.getParent().getParent();
+		// get the parent of the button (linearlayout)
+		LinearLayout listRow = (LinearLayout) deleteButton.getParent();
 
 		String counterId = ((TextView) listRow.findViewById(R.id.deleteId))
 				.getText().toString();
-
+		
 		// delete the champion information from the database
 		databaseExtra.deleteCounter(counterId);
 
