@@ -91,15 +91,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					SQLiteDatabase.OPEN_READONLY);
 
 		} catch (SQLiteException e) {
-
 			// database does't exist yet.
-
 		}
 
 		if (checkDB != null) {
-
 			checkDB.close();
-
 		}
 
 		return checkDB != null ? true : false;
@@ -160,11 +156,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		if (checkDataBase()) {
-			String path = DB_PATH + DB_NAME;
 
-			// delete the database
-			File file = new File(path);
-			boolean deleted = file.delete();
+			// close the database if it is open
+			if (db.isOpen()) {
+				db.close();
+			}
+
+			// delete the database from the storage
+			myContext.deleteDatabase(DB_NAME);
 
 			// pass in new database
 			initializeDatabase();

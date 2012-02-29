@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
@@ -69,6 +70,11 @@ public class ChampionCounterpicks extends Activity {
 
 		// if its not null, display the counters
 		if (counter != null) {
+			header.setPadding(0, 0, 0, 0);
+			header.setGravity(Gravity.LEFT);
+			header.setBackgroundResource(0);
+			header.setTextColor(Color.WHITE);
+
 			listCounter.setAdapter(new CounterAdapter(counter,
 					getHashmap(counter)));
 		} else {
@@ -76,6 +82,8 @@ public class ChampionCounterpicks extends Activity {
 			header.setPadding(20, 20, 20, 20);
 			header.setGravity(Gravity.CENTER);
 			header.setBackgroundResource(R.drawable.bgskills);
+			header.setTextColor(Color.BLACK);
+
 			listCounter.setAdapter(null);
 		}
 	}

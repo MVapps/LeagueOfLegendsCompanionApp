@@ -11,8 +11,9 @@ public class DatabaseExtra extends DatabaseHelper {
 	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
+	final String BACKUP_PATH = "";
 	final Context context;
-	
+
 	public DatabaseExtra(Context context) {
 		super(context, "extrainfo.sqlite");
 
