@@ -86,7 +86,7 @@
                 android:gravity="center"
                 android:onClick="deaultCounters"
                 android:padding="15dp"
-                android:text="Restore All Counters to Default"
+                android:text="Restore Counters to Default"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -103,34 +103,31 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <!--
-		    <Button
-		        android:id="@+id/counterBackup"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginBottom="1px"
-		        android:background="@drawable/bglist"
-		        android:gravity="center"
-		        android:onClick="backupCounters"
-		        android:padding="15dp"
-		        android:text="Backup Custom Counters"
-		        android:textColor="@android:color/black"
-		        android:textSize="16sp" />
-		    
-		    <Button
-		        android:id="@+id/counterRestore"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginBottom="1px"
-		        android:background="@drawable/bglist"
-		        android:gravity="center"
-		        android:onClick="restoreCounters"
-		        android:padding="15dp"
-		        android:text="Restore Counters From File"
-		        android:textColor="@android:color/black"
-		        android:textSize="16sp" />		
-            -->
+<!--             <Button -->
+<!--                 android:id="@+id/counterBackup" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginBottom="1px" -->
+<!--                 android:background="@drawable/bglist" -->
+<!--                 android:gravity="center" -->
+<!--                 android:onClick="backupCounters" -->
+<!--                 android:padding="15dp" -->
+<!--                 android:text="Backup Custom Counters" -->
+<!--                 android:textColor="@android:color/black" -->
+<!--                 android:textSize="16sp" /> -->
 
+<!--             <Button -->
+<!--                 android:id="@+id/counterRestore" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginBottom="1px" -->
+<!--                 android:background="@drawable/bglist" -->
+<!--                 android:gravity="center" -->
+<!--                 android:onClick="restoreCounters" -->
+<!--                 android:padding="15dp" -->
+<!--                 android:text="Restore Counters From File" -->
+<!--                 android:textColor="@android:color/black" -->
+<!--                 android:textSize="16sp" /> -->
         </LinearLayout>
     </ScrollView>
 

@@ -42,7 +42,7 @@ public class ChampionCounterpicksDelete extends Activity {
 
 		String counterId = ((TextView) listRow.findViewById(R.id.deleteId))
 				.getText().toString();
-		
+
 		// delete the champion information from the database
 		databaseExtra.deleteCounter(counterId);
 
@@ -56,6 +56,7 @@ public class ChampionCounterpicksDelete extends Activity {
 	}
 
 	public void populateLists() {
+		TextView header = (TextView) findViewById(R.id.textDeleteCounters);
 		ListView listCounter = (ListView) findViewById(R.id.listCounterArray);
 		String[][] counterListArray;
 
@@ -66,10 +67,13 @@ public class ChampionCounterpicksDelete extends Activity {
 		}
 
 		if (counterListArray != null) {
+			header.setText("Delete Champion Counters");
+
+			// set data to the list view
 			listCounter.setAdapter(new CounterListAdapter(
 					getHashmap(counterListArray)));
 		} else {
-			// header.append("\n\nNo information in the database.");
+			header.append("\n\nNo information in the database.");
 		}
 	}
 
