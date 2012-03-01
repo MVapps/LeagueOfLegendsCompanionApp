@@ -12,13 +12,20 @@ public class DatabaseExtra extends DatabaseHelper {
 	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
+	final String BACKUP_PATH, BACKUP_FILE;
 	final Context context;
 
 	public DatabaseExtra(Context context) {
 		super(context, "extrainfo.sqlite");
 
+		// set main variables for database
 		mainDB = new DatabaseMain(context);
 		this.context = context;
+
+		// set backup variables
+		BACKUP_PATH = Environment.getExternalStorageDirectory().toString()
+				+ "/LoLCompanionApp Backup/";
+		BACKUP_FILE = USER_COUNTER_TABLE + ".txt";
 	}
 
 	@Override
@@ -28,75 +35,83 @@ public class DatabaseExtra extends DatabaseHelper {
 		importUserCounters();
 	}
 
-	// WHEN DEFAULT TABLE FINISHED, CLONE IT AS usercounteredby TABLE AND USE AS
-	// BACKUP
-	// INSETEAD OF CALLING BOTH
+	// WHEN finished with the default table,add new column "visible" default
+	// will all be set to true. When use wants to delete a entry with label
+	// "visible", it will instead change the status in the default table rather
+	// then deleting it. If use deletes a value that is from user counters,
+	// delete it normally.
+	//
+	// MAKE SURE TO UNCOMMENT LINE IN GETCOUNTERCHAMPIONS
 
-	public String[][] getCounteredByChampions(String champ)
-			throws SQLiteException {
+	public String[][] getCounteredByChampions(String champ) {
+
+		return getCounterChampions(champ, "champid", "counterid");
+	}
+
+	public String[][] getCounteringChampions(String champ) {
+
+		return getCounterChampions(champ, "counterid", "champid");
+	}
+
+	private String[][] getCounterChampions(String champ, String searchColumn,
+			String champColumn) {
 		// get champions that counter the chosen champion
 
 		String[][] result = null;
 
 		SQLiteDatabase database = getReadableDatabase();
 
-		// run the query and get result
-		Cursor cur = database.rawQuery("SELECT * FROM " + USER_COUNTER_TABLE
-				+ " WHERE champid=\'" + champ.replace("'", "''") + "\'", null);
+		// create cursor array to hold the two result sets (ne for default
+		// values and one for user values)
+		Cursor[] curArray = {
+				database.rawQuery(
+						"SELECT * FROM " + USER_COUNTER_TABLE + " WHERE "
+								+ searchColumn + "=\'"
+								+ champ.replace("'", "''") + "\'", null),
+				database.rawQuery(
+						"SELECT * FROM " + DEFAULT_COUNTER_TABLE + " WHERE "
+								+ searchColumn + "=\'"
+								+ champ.replace("'", "''")
+								// ***************************************
+//								+ "\'", null) };
+		// *****************************************************
+		 + "\' AND visible=\'true\'", null) };
+//
+		// create a result array based on how many rows returned
+		result = new String[curArray[0].getCount() + curArray[1].getCount()][6];
 
-		// go to first row
-		if (cur.moveToFirst()) {
-			result = new String[cur.getCount()][5];
-			for (int i = 0; i < cur.getCount(); i += 1) {
-				// get the values
-				result[i][0] = ""
-						+ cur.getString(cur.getColumnIndex("counterid"));
-				result[i][1] = ""
-						+ cur.getString(cur.getColumnIndex("description"));
-				result[i][2] = "" + cur.getString(cur.getColumnIndex("role"));
-				result[i][3] = "" + cur.getString(cur.getColumnIndex("tips"));
-				result[i][4] = "" + cur.getString(cur.getColumnIndex("id"));
+		// go through array of cursors and put in values.
+		for (int j = 0; j < curArray.length; j += 1) {
+			// go through the data and fill the array
+			if (curArray[j].moveToFirst()) {
+				for (int i = 0; i < curArray[j].getCount(); i += 1) {
+					// get the values
+					result[i][0] = ""
+							+ curArray[j].getString(curArray[j]
+									.getColumnIndex(champColumn));
+					result[i][1] = ""
+							+ curArray[j].getString(curArray[j]
+									.getColumnIndex("description"));
+					result[i][2] = ""
+							+ curArray[j].getString(curArray[j]
+									.getColumnIndex("role"));
+					result[i][3] = ""
+							+ curArray[j].getString(curArray[j]
+									.getColumnIndex("tips"));
+					result[i][4] = ""
+							+ curArray[j].getString(curArray[j]
+									.getColumnIndex("id"));
 
-				// move to next row
-				cur.moveToNext();
-			}
-		}
+					// first pass is user table, second is default table.
+					if (i == 0) {
+						result[i][5] = "user";
+					} else {
+						result[i][5] = "default";
+					}
 
-		database.close();
-
-		return result;
-
-	}
-
-	public String[][] getCounteringChampions(String champ)
-			throws SQLiteException {
-		// get champions that are countered by the champion
-
-		String[][] result = null;
-
-		SQLiteDatabase database = getReadableDatabase();
-
-		// run the query and get result
-		Cursor cur = database
-				.rawQuery("SELECT * FROM " + USER_COUNTER_TABLE
-						+ " WHERE counterid=\'" + champ.replace("'", "''")
-						+ "\'", null);
-
-		// go to first row
-		if (cur.moveToFirst()) {
-			result = new String[cur.getCount()][5];
-			for (int i = 0; i < cur.getCount(); i += 1) {
-				// get the values
-				result[i][0] = ""
-						+ cur.getString(cur.getColumnIndex("champid"));
-				result[i][1] = ""
-						+ cur.getString(cur.getColumnIndex("description"));
-				result[i][2] = "" + cur.getString(cur.getColumnIndex("role"));
-				result[i][3] = "" + cur.getString(cur.getColumnIndex("tips"));
-				result[i][4] = "" + cur.getInt(cur.getColumnIndex("id"));
-
-				// move to next row
-				cur.moveToNext();
+					// move to next row
+					curArray[j].moveToNext();
+				}
 			}
 		}
 
@@ -105,7 +120,7 @@ public class DatabaseExtra extends DatabaseHelper {
 		return result;
 	}
 
-	public void deleteAllCounters() throws SQLiteException {
+	public void deleteAllUserCounters() throws SQLiteException {
 		SQLiteDatabase database = getWritableDatabase();
 
 		// clear all rows from table
@@ -115,22 +130,38 @@ public class DatabaseExtra extends DatabaseHelper {
 	}
 
 	public void restoreDefaultCounters() throws SQLiteException {
+		// delete all user counters
+		deleteAllUserCounters();
+
 		SQLiteDatabase database = getWritableDatabase();
 
-		// clear all rows from table
-		database.execSQL("DROP TABLE IF EXISTS " + USER_COUNTER_TABLE);
-		database.execSQL("CREATE TABLE " + USER_COUNTER_TABLE
-				+ " AS SELECT id,champid,counterid,description,role,tips FROM "
-				+ DEFAULT_COUNTER_TABLE);
+		// create new values for default database
+		ContentValues values = new ContentValues();
+		values.put("visible", "true");
+
+		// update the database with new values. (make rows disappear)
+		database.update(DEFAULT_COUNTER_TABLE, values, null, null);
 
 		database.close();
 	}
 
-	public void deleteCounter(String id) throws SQLiteException {
+	public void deleteCounter(String id, String type) throws SQLiteException {
 		SQLiteDatabase database = getWritableDatabase();
 
-		database.delete(USER_COUNTER_TABLE, "id='" + id.replace("'", "''")
-				+ "'", null);
+		// if deleting a row that is added by the user
+		if (type.equals("user")) {
+			database.delete(USER_COUNTER_TABLE, "id='" + id + "'", null);
+		}
+		// else deleting a default row. Only hide default rows.
+		else {
+			// create new values
+			ContentValues values = new ContentValues();
+			values.put("visible", "false");
+
+			// update the database with new values. (make rows disappear)
+			database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id + "'",
+					null);
+		}
 
 		database.close();
 	}
@@ -153,13 +184,17 @@ public class DatabaseExtra extends DatabaseHelper {
 	}
 
 	public boolean backupUserCounters() throws SQLiteException {
-		String backupPath = Environment.getExternalStorageDirectory()
-				.toString() + "/LoLCompanionApp Backup/";
-		
 		SQLiteDatabase database = getReadableDatabase();
 
-		
-		
+		Cursor cur = database.rawQuery("SELECT * FROM " + USER_COUNTER_TABLE,
+				null);
+
+		// if (cur.moveToFirst()) {
+		// do {
+		// // ........
+		// } while (!cur.isLast());
+		// }
+
 		database.close();
 		return false;
 	}

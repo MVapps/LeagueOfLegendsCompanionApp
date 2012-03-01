@@ -3,7 +3,6 @@ package com.LoLCompanionApp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,19 +45,11 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		startActivity(addNewPage);
 	}
 
-	public void deaultCounters(View button) {
+	public void defaultCounters(View button) {
 		databaseExtra.restoreDefaultCounters();
 
 		// inform user of changes
 		Toast.makeText(this, "Counters restored to default.",
-				Toast.LENGTH_SHORT).show();
-	}
-
-	public void deleteAllCounters(View button) {
-		databaseExtra.deleteAllCounters();
-
-		// inform user of changes
-		Toast.makeText(this, "All counters have been deleted.",
 				Toast.LENGTH_SHORT).show();
 	}
 
@@ -72,13 +63,13 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		}
 	}
 
-	public void restoreCounters() {
+	public void restoreCounters(View button) {
 		if (databaseExtra.importUserCounters()) {
 			Toast.makeText(this, "Database import sucessful.",
 					Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this,
-					"There was a problem with importing the user dataabse..",
+					"There was a problem with importing the user dataabse.",
 					Toast.LENGTH_LONG).show();
 		}
 	}

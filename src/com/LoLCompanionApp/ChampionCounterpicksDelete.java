@@ -42,9 +42,14 @@ public class ChampionCounterpicksDelete extends Activity {
 
 		String counterId = ((TextView) listRow.findViewById(R.id.deleteId))
 				.getText().toString();
+		String counterType = ((TextView) listRow.findViewById(R.id.deleteType))
+				.getText().toString();
 
 		// delete the champion information from the database
-		databaseExtra.deleteCounter(counterId);
+		databaseExtra.deleteCounter(counterId, counterType);
+
+		Toast.makeText(this, counterId + " " + counterType, Toast.LENGTH_SHORT)
+				.show();
 
 		Toast.makeText(this,
 				"Champion counter infromation deleted from database.",
@@ -99,6 +104,7 @@ public class ChampionCounterpicksDelete extends Activity {
 					+ "\nDescription: " + counterArray[i][1] + "\nTips: "
 					+ counterArray[i][3]);
 			map.put("id", counterArray[i][4]);
+			map.put("type", counterArray[i][5]);
 			result.add(map);
 		}
 		return result;
@@ -127,11 +133,14 @@ public class ChampionCounterpicksDelete extends Activity {
 
 		CounterListAdapter(ArrayList<HashMap<String, String>> hashMap) {
 			// pass all parameters to the ArayAdapter
-			super(getBaseContext(), hashMap, R.layout.quickchampcounterlist,
-					new String[] { "champ", "counter", "details", "id" },
+			super(
+					getBaseContext(),
+					hashMap,
+					R.layout.quickchampcounterlist,
+					new String[] { "champ", "counter", "details", "id", "type" },
 					new int[] { R.id.deleteCounteredChamp,
 							R.id.deleteCounterChamp, R.id.deleteDetails,
-							R.id.deleteId });
+							R.id.deleteId, R.id.deleteType });
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
