@@ -1,8 +1,12 @@
 package com.LoLCompanionApp;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,17 +58,24 @@ public class ChampionCounterpicksEditMenu extends Activity {
 	}
 
 	public void backupCounters(View button) {
-		if (databaseExtra.backupUserCounters()) {
-			Toast.makeText(this, "Backup succesful to SD card.",
-					Toast.LENGTH_LONG).show();
-		} else {
+		try {
+			databaseExtra.backupCounters();
+		} catch (SQLiteException e) {
 			Toast.makeText(this, "Backup was not succesful.", Toast.LENGTH_LONG)
 					.show();
+			Log.e("SQLiteException in backupCounters - ", e.getMessage());
+		} catch (IOException e) {
+			Toast.makeText(this, "Backup was not succesful.", Toast.LENGTH_LONG)
+					.show();
+			Log.e("IOException in backupCounters - ", e.getMessage());
 		}
+
+		Toast.makeText(this, "Backup succesful to SD card.", Toast.LENGTH_LONG)
+				.show();
 	}
 
 	public void restoreCounters(View button) {
-		if (databaseExtra.importUserCounters()) {
+		if (databaseExtra.importCounters()) {
 			Toast.makeText(this, "Database import sucessful.",
 					Toast.LENGTH_LONG).show();
 		} else {

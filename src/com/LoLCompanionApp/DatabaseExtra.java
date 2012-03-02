@@ -1,5 +1,9 @@
 package com.LoLCompanionApp;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +16,7 @@ public class DatabaseExtra extends DatabaseHelper {
 	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
-	final String BACKUP_PATH, BACKUP_FILE;
+	final String BACKUP_PATH, BACKUP_USER_FILE, BACKUP_DEFAULT_FILE;
 	final Context context;
 
 	public DatabaseExtra(Context context) {
@@ -24,24 +28,25 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		// set backup variables
 		BACKUP_PATH = Environment.getExternalStorageDirectory().toString()
-				+ "/LoLCompanionApp Backup/";
-		BACKUP_FILE = USER_COUNTER_TABLE + ".txt";
+				+ File.separator + "LoLCompanionAppBackup" + File.separator;
+		BACKUP_USER_FILE = "backup_" + USER_COUNTER_TABLE + ".txt";
+		BACKUP_DEFAULT_FILE = "backup_" + DEFAULT_COUNTER_TABLE + ".txt";
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		backupUserCounters();
-		super.onUpgrade(db, oldVersion, newVersion);
-		importUserCounters();
+		try {
+			backupCounters();
+			super.onUpgrade(db, oldVersion, newVersion);
+			importCounters();
+		} catch (SQLiteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	// WHEN finished with the default table,add new column "visible" default
-	// will all be set to true. When use wants to delete a entry with label
-	// "visible", it will instead change the status in the default table rather
-	// then deleting it. If use deletes a value that is from user counters,
-	// delete it normally.
-	//
-	// MAKE SURE TO UNCOMMENT LINE IN GETCOUNTERCHAMPIONS
 
 	public String[][] getCounteredByChampions(String champ) {
 
@@ -185,23 +190,118 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public boolean backupUserCounters() throws SQLiteException {
-		SQLiteDatabase database = getReadableDatabase();
+	public boolean backupCounters() throws SQLiteException, IOException {
 
-		Cursor cur = database.rawQuery("SELECT * FROM " + USER_COUNTER_TABLE,
-				null);
+		backupUserCounters();
+		backupDefaultCounters();
 
-		// if (cur.moveToFirst()) {
-		// do {
-		// // ........
-		// } while (!cur.isLast());
-		// }
-
-		database.close();
-		return false;
+		return true;
 	}
 
-	public boolean importUserCounters() throws SQLiteException {
+	public boolean backupUserCounters() throws IOException, SQLiteException {
+		// get path and create new backup file
+		File userFile = new File(BACKUP_USER_FILE);
+		userFile.mkdirs();
+		userFile.createNewFile();
+
+		FileWriter fileUserWriter = new FileWriter(userFile);
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// get database cursors
+		Cursor curUser = database.rawQuery("SELECT * FROM "
+				+ USER_COUNTER_TABLE, null);
+
+		// write the user files
+		// write down the actual information written by the user into a file in
+		// order to restore it in the future
+		if (curUser.moveToFirst()) {
+			// get the names of columns in the database
+			String[] dbColumns = curUser.getColumnNames();
+			String row = "";
+			fileUserWriter.write("");
+
+			// get the rows to add into the database
+			// start at 1 to skip id column
+			for (int i = 1; i < dbColumns.length; i += 1) {
+				row += dbColumns[i];
+				// if i is not at the last pass, add a delimener
+				if ((i + 1) < dbColumns.length) {
+					row += "|";
+				}
+			}
+
+			// append the first row that has column names
+			fileUserWriter.append(row + "\n");
+
+			while (!curUser.isAfterLast()) {
+				for (int i = 1; i < dbColumns.length; i += 1) {
+					row = curUser.getString(curUser
+							.getColumnIndex(dbColumns[i]));
+					// if not at last pass, add deliminer
+					if ((i + 1) < dbColumns.length) {
+						row += "|";
+					}
+				}
+				// append to the file
+				fileUserWriter.append(row + "\n");
+			}
+			// flush and close the writer
+			fileUserWriter.flush();
+			fileUserWriter.close();
+		}
+
+		database.close();
+
+		return true;
+	}
+
+	public boolean backupDefaultCounters() throws IOException, SQLiteException {
+		// get path and create new backup file
+		File defaultFile = new File(BACKUP_DEFAULT_FILE);
+		defaultFile.mkdirs();
+		defaultFile.createNewFile();
+
+		// create file writers
+		FileWriter fileDefaultWriter = new FileWriter(defaultFile);
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		Cursor curDefault = database.rawQuery("SELECT * FROM "
+				+ DEFAULT_COUNTER_TABLE + " WHERE visible='false'", null);
+
+		// write the the default file.
+		// write down all ids of the files that have been marked as
+		// "deleted by the user" to persist the changes in a new version
+		if (curDefault.moveToFirst()) {
+			String row;
+			fileDefaultWriter.write("");
+
+			while (!curDefault.isAfterLast()) {
+				// get the id of the row that is "deleted"
+				row = curDefault.getString(curDefault.getColumnIndex("id"));
+
+				// append id to file
+				fileDefaultWriter.append(row);
+
+				// if not the last row, append with deliminer ','
+				if (!curDefault.isLast()) {
+					fileDefaultWriter.append(",");
+				}
+
+				curDefault.moveToNext();
+			}
+			// flush and close the writer
+			fileDefaultWriter.flush();
+			fileDefaultWriter.close();
+		}
+
+		database.close();
+
+		return true;
+	}
+
+	public boolean importCounters() throws SQLiteException {
 
 		return false;
 	}
