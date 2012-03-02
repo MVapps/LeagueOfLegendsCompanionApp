@@ -61,12 +61,16 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		try {
 			databaseExtra.backupCounters();
 		} catch (SQLiteException e) {
-			Toast.makeText(this, "Backup was not succesful.", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(
+					this,
+					"Backup was not succesful. Please check status of SD card.",
+					Toast.LENGTH_LONG).show();
 			Log.e("SQLiteException in backupCounters - ", e.getMessage());
 		} catch (IOException e) {
-			Toast.makeText(this, "Backup was not succesful.", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(
+					this,
+					"Backup was not succesful. Please check status of SD card.",
+					Toast.LENGTH_LONG).show();
 			Log.e("IOException in backupCounters - ", e.getMessage());
 		}
 
