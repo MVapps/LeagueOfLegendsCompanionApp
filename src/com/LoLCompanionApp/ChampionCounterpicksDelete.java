@@ -47,10 +47,7 @@ public class ChampionCounterpicksDelete extends Activity {
 
 		// delete the champion information from the database
 		databaseExtra.deleteCounter(counterId, counterType);
-
-		Toast.makeText(this, counterId + " " + counterType, Toast.LENGTH_SHORT)
-				.show();
-
+		
 		Toast.makeText(this,
 				"Champion counter infromation deleted from database.",
 				Toast.LENGTH_SHORT).show();

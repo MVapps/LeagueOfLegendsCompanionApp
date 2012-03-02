@@ -67,7 +67,7 @@ public class ChampionCounterpicks extends Activity {
 		} else {
 			counter = databaseExtra.getCounteredByChampions(champion);
 		}
-
+		
 		// if its not null, display the counters
 		if (counter != null) {
 			header.setPadding(0, 0, 0, 0);

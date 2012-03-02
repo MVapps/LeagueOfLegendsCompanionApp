@@ -72,13 +72,13 @@ public class DatabaseExtra extends DatabaseHelper {
 						"SELECT * FROM " + DEFAULT_COUNTER_TABLE + " WHERE "
 								+ searchColumn + "=\'"
 								+ champ.replace("'", "''")
-								// ***************************************
-//								+ "\'", null) };
-		// *****************************************************
-		 + "\' AND visible=\'true\'", null) };
-//
+								+ "\' AND visible=\'true\'", null) };
+
 		// create a result array based on how many rows returned
 		result = new String[curArray[0].getCount() + curArray[1].getCount()][6];
+
+		// create a new result counter to keep track of number of results
+		int counter = 0;
 
 		// go through array of cursors and put in values.
 		for (int j = 0; j < curArray.length; j += 1) {
@@ -86,31 +86,33 @@ public class DatabaseExtra extends DatabaseHelper {
 			if (curArray[j].moveToFirst()) {
 				for (int i = 0; i < curArray[j].getCount(); i += 1) {
 					// get the values
-					result[i][0] = ""
+					result[counter][0] = ""
 							+ curArray[j].getString(curArray[j]
 									.getColumnIndex(champColumn));
-					result[i][1] = ""
+					result[counter][1] = ""
 							+ curArray[j].getString(curArray[j]
 									.getColumnIndex("description"));
-					result[i][2] = ""
+					result[counter][2] = ""
 							+ curArray[j].getString(curArray[j]
 									.getColumnIndex("role"));
-					result[i][3] = ""
+					result[counter][3] = ""
 							+ curArray[j].getString(curArray[j]
 									.getColumnIndex("tips"));
-					result[i][4] = ""
+					result[counter][4] = ""
 							+ curArray[j].getString(curArray[j]
 									.getColumnIndex("id"));
 
 					// first pass is user table, second is default table.
-					if (i == 0) {
-						result[i][5] = "user";
+					if (counter == 0) {
+						result[counter][5] = "user";
 					} else {
-						result[i][5] = "default";
+						result[counter][5] = "default";
 					}
 
 					// move to next row
 					curArray[j].moveToNext();
+					// Increment the resultCounter
+					counter += 1;
 				}
 			}
 		}
