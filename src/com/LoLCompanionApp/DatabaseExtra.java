@@ -1,7 +1,8 @@
 package com.LoLCompanionApp;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -11,12 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
-import android.util.Log;
-import android.widget.Toast;
 
 public class DatabaseExtra extends DatabaseHelper {
 
-	DatabaseMain mainDB;
 	final String USER_COUNTER_TABLE = "usercounteredby";
 	final String DEFAULT_COUNTER_TABLE = "defaultcounteredby";
 	final String BACKUP_PATH, BACKUP_USER_FILE, BACKUP_DEFAULT_FILE;
@@ -24,9 +22,6 @@ public class DatabaseExtra extends DatabaseHelper {
 
 	public DatabaseExtra(Context context) {
 		super(context, "extrainfo.sqlite");
-
-		// set main variables for database
-		mainDB = new DatabaseMain(context);
 		this.context = context;
 
 		// set backup variables
@@ -39,10 +34,14 @@ public class DatabaseExtra extends DatabaseHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		try {
+			// backup the counters
 			backupUserCounters();
 			backupDefaultCounters();
+			// upgrade the databases
 			super.onUpgrade(db, oldVersion, newVersion);
-			importCounters();
+			// import the user counters
+			importUserCounters();
+			importDefaultCounters();
 		} catch (SQLiteException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -187,6 +186,24 @@ public class DatabaseExtra extends DatabaseHelper {
 		return false;
 	}
 
+	public void restoreDefaultToVisible(String id) {
+		SQLiteDatabase database = getWritableDatabase();
+
+		// create new values
+		ContentValues values = new ContentValues();
+		values.put("visible", "true");
+
+		try {
+			// update the database with new values. (make rows appear)
+			database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id + "'",
+					null);
+		} catch (SQLiteException e) {
+			e.printStackTrace();
+		}
+
+		database.close();
+	}
+
 	public void addNewCounter(String counter, String champ, String role,
 			String tips, String description) throws SQLiteException {
 		SQLiteDatabase database = getWritableDatabase();
@@ -257,12 +274,7 @@ public class DatabaseExtra extends DatabaseHelper {
 					}
 				}
 				// append to the file
-				fileUserWriter.append(row);
-
-				// if not on last line, add new return
-				if (!curUser.isLast()) {
-					fileUserWriter.append("\n");
-				}
+				fileUserWriter.append(row + "\n");
 
 				// go to next line
 				curUser.moveToNext();
@@ -320,8 +332,47 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public void importCounters() throws SQLiteException, IOException {
+	public void importDefaultCounters() throws SQLiteException, IOException {
+		try {
+			File defaultFile = new File(BACKUP_PATH + BACKUP_DEFAULT_FILE);
+			BufferedReader buffreader = new BufferedReader(new FileReader(
+					defaultFile));
 
+			// read the data (all in one line because was appended)
+			String[] defaultIds = buffreader.readLine().split(",");
+
+			for (String id : defaultIds) {
+				restoreDefaultToVisible(id);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void importUserCounters() throws IOException, SQLiteException {
+		try {
+			File userFile = new File(BACKUP_PATH + BACKUP_USER_FILE);
+			BufferedReader buffreader = new BufferedReader(new FileReader(
+					userFile));
+
+			// read first line (columns)
+			String line = buffreader.readLine();
+
+			// read the rest of the lines to get the data
+			line = buffreader.readLine();
+			while (!line.equals("")) {
+				String[] data = line.split("\\|");
+
+				// add the counter data into the database
+				addNewCounter(data[1], data[0], data[3], data[4], data[2]);
+
+				// read next line
+				line = buffreader.readLine();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

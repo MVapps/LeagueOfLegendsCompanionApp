@@ -62,49 +62,34 @@ public class ChampionCounterpicksEditMenu extends Activity {
 		// backup the user data
 		try {
 			databaseExtra.backupUserCounters();
-			// if no exception, display message
-			Toast.makeText(this, "Backup of user data succesful.",
-					Toast.LENGTH_SHORT).show();
-		} catch (SQLiteException e) {
-			Toast.makeText(this, "Backup of user data was not succesful. Check status of SD card.",
-					Toast.LENGTH_SHORT).show();
-			Log.e("SQLiteException in backupUserCounters - ", e.getMessage());
-		} catch (IOException e) {
-			Toast.makeText(this, "Backup of user data was not succesful. Check status of SD card.",
-					Toast.LENGTH_SHORT).show();
-			Log.e("IOException in backupUserCounters - ", e.getMessage());
-		}
-
-		// backup the default data
-		try {
 			databaseExtra.backupDefaultCounters();
 			// if no exception, display message
-			Toast.makeText(this, "Backup of default data succesful.",
+			Toast.makeText(this, "Backup of data succesful.",
 					Toast.LENGTH_SHORT).show();
 		} catch (SQLiteException e) {
-			Toast.makeText(this, "Backup of default data was not succesful. Check status of SD card.",
+			Toast.makeText(this, "Backup of data was not succesful. Check status of SD card.",
 					Toast.LENGTH_SHORT).show();
-			Log.e("SQLiteException in backupDefaultCounters - ", e.getMessage());
+			Log.e("SQLiteException in backupCounters - ", e.getMessage());
 		} catch (IOException e) {
-			Toast.makeText(this, "Backup of default data was not succesful. Check status of SD card.",
+			Toast.makeText(this, "Backup of data was not succesful. Check status of SD card.",
 					Toast.LENGTH_SHORT).show();
-			Log.e("IOException in backupDefaultCounters - ", e.getMessage());
+			Log.e("IOException in backupCounters - ", e.getMessage());
 		}
-
 	}
 
 	public void restoreCounters(View button) {
 		try {
-			databaseExtra.importCounters();
+			databaseExtra.importUserCounters();
+			databaseExtra.importDefaultCounters();
 			// if no exception, display message
-			Toast.makeText(this, "Restoration of data succesful.",
+			Toast.makeText(this, "Data import was succesful.",
 					Toast.LENGTH_SHORT).show();
 		} catch (SQLiteException e) {
-			Toast.makeText(this, "Restoration of data was not succesful.",
+			Toast.makeText(this, "Data import was not succesful.",
 					Toast.LENGTH_LONG).show();
 			Log.e("SQLiteException in importCounters - ", e.getMessage());
 		} catch (IOException e) {
-			Toast.makeText(this, "Restoration of data was not succesful.",
+			Toast.makeText(this, "Data import was not succesful.",
 					Toast.LENGTH_LONG).show();
 			Log.e("IOException in importCounters - ", e.getMessage());
 		}

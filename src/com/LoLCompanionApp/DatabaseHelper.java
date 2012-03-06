@@ -1,6 +1,5 @@
 package com.LoLCompanionApp;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,12 +155,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		if (checkDataBase()) {
-
 			// close the database if it is open
 			if (db.isOpen()) {
 				db.close();
 			}
-
 			// delete the database from the storage
 			myContext.deleteDatabase(DB_NAME);
 
