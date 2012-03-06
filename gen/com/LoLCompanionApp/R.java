@@ -1087,14 +1087,14 @@ public final class R {
         public static final int champTitle=0x7f050023;
         public static final int champheader=0x7f050002;
         public static final int counterAddNew=0x7f050018;
-        public static final int counterBackup=0x7f05001d;
+        public static final int counterBackup=0x7f05001c;
         public static final int counterChamp=0x7f05003a;
         public static final int counterChampPic=0x7f050039;
-        public static final int counterDefault=0x7f05001c;
+        public static final int counterDefault=0x7f05001e;
         public static final int counterDelete=0x7f050019;
         public static final int counterDescription=0x7f05003c;
         public static final int counterEdit=0x7f050004;
-        public static final int counterRestore=0x7f05001e;
+        public static final int counterRestore=0x7f05001d;
         public static final int counterRole=0x7f05003b;
         public static final int counterTips=0x7f05003d;
         public static final int counteredDelete=0x7f05001a;

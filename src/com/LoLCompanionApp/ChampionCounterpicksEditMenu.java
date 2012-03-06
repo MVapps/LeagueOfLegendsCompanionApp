@@ -64,16 +64,17 @@ public class ChampionCounterpicksEditMenu extends Activity {
 			databaseExtra.backupUserCounters();
 			databaseExtra.backupDefaultCounters();
 			// if no exception, display message
-			Toast.makeText(this, "Backup of data succesful.",
-					Toast.LENGTH_SHORT).show();
-		} catch (SQLiteException e) {
-			Toast.makeText(this, "Backup of data was not succesful. Check status of SD card.",
+			Toast.makeText(
+					this,
+					"Backup of data succesful to:\n"
+							+ databaseExtra.getBackupPath(), Toast.LENGTH_LONG)
+					.show();
+		} catch (Exception e) {
+			Toast.makeText(
+					this,
+					"Backup of data was not succesful. Check status of SD card.",
 					Toast.LENGTH_SHORT).show();
 			Log.e("SQLiteException in backupCounters - ", e.getMessage());
-		} catch (IOException e) {
-			Toast.makeText(this, "Backup of data was not succesful. Check status of SD card.",
-					Toast.LENGTH_SHORT).show();
-			Log.e("IOException in backupCounters - ", e.getMessage());
 		}
 	}
 
@@ -84,14 +85,13 @@ public class ChampionCounterpicksEditMenu extends Activity {
 			// if no exception, display message
 			Toast.makeText(this, "Data import was succesful.",
 					Toast.LENGTH_SHORT).show();
-		} catch (SQLiteException e) {
-			Toast.makeText(this, "Data import was not succesful.",
-					Toast.LENGTH_LONG).show();
+		} catch (Exception e) {
+			Toast.makeText(
+					this,
+					"Data import was not succesful. Check backup path:\n"
+							+ databaseExtra.getBackupPath(), Toast.LENGTH_LONG)
+					.show();
 			Log.e("SQLiteException in importCounters - ", e.getMessage());
-		} catch (IOException e) {
-			Toast.makeText(this, "Data import was not succesful.",
-					Toast.LENGTH_LONG).show();
-			Log.e("IOException in importCounters - ", e.getMessage());
 		}
 	}
 

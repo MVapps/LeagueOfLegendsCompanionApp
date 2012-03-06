@@ -375,4 +375,8 @@ public class DatabaseExtra extends DatabaseHelper {
 		}
 	}
 
+	public String getBackupPath() {
+		return BACKUP_PATH;
+	}
+
 }
