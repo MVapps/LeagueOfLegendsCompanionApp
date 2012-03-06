@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -44,13 +45,16 @@ public class ChampionCounterpicksDelete extends Activity {
 				.getText().toString();
 		String counterType = ((TextView) listRow.findViewById(R.id.deleteType))
 				.getText().toString();
-
-		// delete the champion information from the database
-		databaseExtra.deleteCounter(counterId, counterType);
 		
-		Toast.makeText(this,
-				"Champion counter infromation deleted from database.",
-				Toast.LENGTH_SHORT).show();
+		// delete the champion information from the database
+		if (databaseExtra.deleteCounter(counterId, counterType)) {
+			Toast.makeText(this,
+					"Champion counter information deleted from database.",
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(this, "There was an error deleting the data.",
+					Toast.LENGTH_SHORT).show();
+		}
 
 		// restart screen
 		finish();

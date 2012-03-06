@@ -1,6 +1,7 @@
 package com.LoLCompanionApp;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,6 +11,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 public class DatabaseExtra extends DatabaseHelper {
 
@@ -36,7 +39,8 @@ public class DatabaseExtra extends DatabaseHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		try {
-			backupCounters();
+			backupUserCounters();
+			backupDefaultCounters();
 			super.onUpgrade(db, oldVersion, newVersion);
 			importCounters();
 		} catch (SQLiteException e) {
@@ -106,7 +110,7 @@ public class DatabaseExtra extends DatabaseHelper {
 									.getColumnIndex("id"));
 
 					// first pass is user table, second is default table.
-					if (counter == 0) {
+					if (j == 0) {
 						result[counter][5] = "user";
 					} else {
 						result[counter][5] = "default";
@@ -150,12 +154,18 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public void deleteCounter(String id, String type) throws SQLiteException {
+	public boolean deleteCounter(String id, String type) throws SQLiteException {
 		SQLiteDatabase database = getWritableDatabase();
 
 		// if deleting a row that is added by the user
 		if (type.equals("user")) {
-			database.delete(USER_COUNTER_TABLE, "id='" + id + "'", null);
+			try {
+				database.delete(USER_COUNTER_TABLE, "id='" + id + "'", null);
+				database.close();
+				return true;
+			} catch (SQLiteException e) {
+				e.printStackTrace();
+			}
 		}
 		// else deleting a default row. Only hide default rows.
 		else {
@@ -163,12 +173,18 @@ public class DatabaseExtra extends DatabaseHelper {
 			ContentValues values = new ContentValues();
 			values.put("visible", "false");
 
-			// update the database with new values. (make rows disappear)
-			database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id + "'",
-					null);
+			try {
+				// update the database with new values. (make rows disappear)
+				database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id
+						+ "'", null);
+				return true;
+			} catch (SQLiteException e) {
+				e.printStackTrace();
+			}
 		}
 
 		database.close();
+		return false;
 	}
 
 	public void addNewCounter(String counter, String champ, String role,
@@ -188,20 +204,15 @@ public class DatabaseExtra extends DatabaseHelper {
 		database.close();
 	}
 
-	public boolean backupCounters() throws SQLiteException, IOException {
-
-		backupUserCounters();
-		backupDefaultCounters();
-
-		return true;
-	}
-
-	public boolean backupUserCounters() throws IOException, SQLiteException {
+	public void backupUserCounters() throws IOException, SQLiteException {
 		// get path and create new backup file
-		File userFile = new File(BACKUP_USER_FILE);
-		userFile.mkdirs();
+		File userPath = new File(BACKUP_PATH);
+		userPath.mkdirs();
+
+		File userFile = new File(BACKUP_PATH + BACKUP_USER_FILE);
 		userFile.createNewFile();
 
+		// new file writer
 		FileWriter fileUserWriter = new FileWriter(userFile);
 
 		SQLiteDatabase database = getReadableDatabase();
@@ -233,8 +244,12 @@ public class DatabaseExtra extends DatabaseHelper {
 			fileUserWriter.append(row + "\n");
 
 			while (!curUser.isAfterLast()) {
+				// reset row string
+				row = "";
+
+				// populate string with data
 				for (int i = 1; i < dbColumns.length; i += 1) {
-					row = curUser.getString(curUser
+					row += curUser.getString(curUser
 							.getColumnIndex(dbColumns[i]));
 					// if not at last pass, add deliminer
 					if ((i + 1) < dbColumns.length) {
@@ -242,7 +257,15 @@ public class DatabaseExtra extends DatabaseHelper {
 					}
 				}
 				// append to the file
-				fileUserWriter.append(row + "\n");
+				fileUserWriter.append(row);
+
+				// if not on last line, add new return
+				if (!curUser.isLast()) {
+					fileUserWriter.append("\n");
+				}
+
+				// go to next line
+				curUser.moveToNext();
 			}
 			// flush and close the writer
 			fileUserWriter.flush();
@@ -250,14 +273,14 @@ public class DatabaseExtra extends DatabaseHelper {
 		}
 
 		database.close();
-
-		return true;
 	}
 
-	public boolean backupDefaultCounters() throws IOException, SQLiteException {
+	public void backupDefaultCounters() throws IOException, SQLiteException {
 		// get path and create new backup file
-		File defaultFile = new File(BACKUP_DEFAULT_FILE);
-		defaultFile.mkdirs();
+		File defaultPath = new File(BACKUP_PATH);
+		defaultPath.mkdirs();
+
+		File defaultFile = new File(BACKUP_PATH + BACKUP_DEFAULT_FILE);
 		defaultFile.createNewFile();
 
 		// create file writers
@@ -295,13 +318,10 @@ public class DatabaseExtra extends DatabaseHelper {
 		}
 
 		database.close();
-
-		return true;
 	}
 
-	public boolean importCounters() throws SQLiteException {
+	public void importCounters() throws SQLiteException, IOException {
 
-		return false;
 	}
 
 }
