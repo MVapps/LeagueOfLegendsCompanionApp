@@ -59,7 +59,7 @@
                 android:id="@+id/textCountersName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Counters" />
+                android:text="Champion counters..." />
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteChampionName"

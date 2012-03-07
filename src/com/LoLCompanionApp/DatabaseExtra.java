@@ -176,6 +176,7 @@ public class DatabaseExtra extends DatabaseHelper {
 				// update the database with new values. (make rows disappear)
 				database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id
 						+ "'", null);
+				database.close();
 				return true;
 			} catch (SQLiteException e) {
 				e.printStackTrace();

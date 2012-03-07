@@ -55,7 +55,6 @@ public class ChampionCounterpicks extends Activity {
 
 		// change the text for the page
 		TextView header = (TextView) findViewById(R.id.textCounters);
-		header.setText(viewCounter);
 
 		// create the list of counters for the page
 		ListView listCounter = (ListView) findViewById(R.id.listCounters);
@@ -67,13 +66,14 @@ public class ChampionCounterpicks extends Activity {
 		} else {
 			counter = databaseExtra.getCounteredByChampions(champion);
 		}
-		
+
 		// if its not null, display the counters
 		if (counter != null) {
 			header.setPadding(0, 0, 0, 0);
 			header.setGravity(Gravity.LEFT);
 			header.setBackgroundResource(0);
 			header.setTextColor(Color.WHITE);
+			header.setText(champion + " " + viewCounter);
 
 			listCounter.setAdapter(new CounterAdapter(counter,
 					getHashmap(counter)));

@@ -44,7 +44,7 @@ public class ChampionCounterpicksDelete extends Activity {
 				.getText().toString();
 		String counterType = ((TextView) listRow.findViewById(R.id.deleteType))
 				.getText().toString();
-		
+
 		// delete the champion information from the database
 		if (databaseExtra.deleteCounter(counterId, counterType)) {
 			Toast.makeText(this,

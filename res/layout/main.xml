@@ -35,7 +35,7 @@
         android:layout_below="@+id/generalGuidesButton"
         android:background="@drawable/mainbutton"
         android:onClick="patches"
-        android:text="Patch Releases"
+        android:text="Patch Releases (online)"
         android:textColor="#FFFFFF" />
 
     <Button
