@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ChampionList extends Activity {
 
@@ -42,8 +44,19 @@ public class ChampionList extends Activity {
 
 		database = new DatabaseMain(this);
 
-		champs = database.getAllChampions();
-		champTitles = database.getAllChampionTitles();
+		try {
+			champs = database.getAllChampions();
+			champTitles = database.getAllChampionTitles();
+		} catch (SQLiteException e) {
+			Toast.makeText(
+					this,
+					"There was an error retrieving the database. Please re-install.",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+
+			champs = null;
+			champTitles = null;
+		}
 
 		// create the hash map to be used to populate the list
 		createHashMap();

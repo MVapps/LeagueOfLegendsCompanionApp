@@ -16,23 +16,32 @@
         android:text="Champion List"
         android:textColor="#FFFFFF" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/champListButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mainlogo" />
+
     <Button
-        android:id="@+id/generalGuidesButton"
+        android:id="@+id/otherFunctionsButton"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/champListButton"
         android:layout_below="@+id/champListButton"
         android:background="@drawable/mainbutton"
-        android:onClick="generalGuides"
-        android:text="General Guides"
+        android:onClick="otherFunctions"
+        android:text="Other Information"
         android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/patchButton"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/generalGuidesButton"
-        android:layout_below="@+id/generalGuidesButton"
+        android:layout_alignLeft="@+id/otherFunctionsButton"
+        android:layout_below="@+id/otherFunctionsButton"
         android:background="@drawable/mainbutton"
         android:onClick="patches"
         android:text="Patch Releases (online)"
@@ -48,14 +57,5 @@
         android:onClick="about"
         android:text="About"
         android:textColor="#FFFFFF" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/champListButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/mainlogo" />
 
 </RelativeLayout>

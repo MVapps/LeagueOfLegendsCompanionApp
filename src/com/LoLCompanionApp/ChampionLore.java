@@ -2,6 +2,7 @@ package com.LoLCompanionApp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,4 +40,8 @@ public class ChampionLore extends Activity {
 		champImage.setImageResource(path);
 	}
 
+
+	public void back(View view) {
+		finish();
+	}
 }

@@ -33,9 +33,9 @@ public class Main extends Activity {
 		startActivity(browserIntent);
 	}
 
-	public void generalGuides(View button) {
+	public void otherFunctions(View button) {
 		Intent Page2 = new Intent();
-		Page2.setClassName("com.LoLCompanionApp", "com.LoLCompanionApp.GeneralGuides");
+		Page2.setClassName("com.LoLCompanionApp", "com.LoLCompanionApp.MainOther");
 		startActivity(Page2);
 	}
 }

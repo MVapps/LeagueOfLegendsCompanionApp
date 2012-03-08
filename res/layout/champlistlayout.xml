@@ -44,16 +44,16 @@
 	        android:layout_margin="3dp"
 	        android:background="@drawable/backarrow"
 	        android:onClick="back"
-	        android:textColor="#000000" />
+	        android:textColor="#000000" />
         -->
 
         <Button
             android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/buttonListType"
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
+            android:layout_toLeftOf="@+id/buttonListType"
             android:background="@drawable/search"
             android:onClick="keyboard"
             android:textColor="#000000" />
@@ -62,10 +62,9 @@
             android:id="@+id/buttonListType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
-            
-            android:layout_alignParentRight="true"
             android:background="@drawable/viewgrid"
             android:onClick="changeListType"
             android:textColor="#000000" />

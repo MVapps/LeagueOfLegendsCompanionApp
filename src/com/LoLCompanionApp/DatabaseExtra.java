@@ -380,4 +380,58 @@ public class DatabaseExtra extends DatabaseHelper {
 		return BACKUP_PATH;
 	}
 
+	public String getCreatureGroup(String creature) {
+		String result = "";
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT creaturegroup FROM spawns WHERE creature=\'" + creature
+						+ "\'", null);
+		if (cur.moveToFirst()) {
+			result = cur.getString(0);
+		}
+
+		database.close();
+
+		return result;
+	}
+
+	public long getCreatureInitialSpawnTime(String creature) {
+		long result = 0;
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT initialspawn FROM spawns WHERE creature=\'" + creature
+						+ "\'", null);
+		if (cur.moveToFirst()) {
+			result = cur.getLong(0);
+		}
+
+		database.close();
+
+		return result;
+	}
+
+	public long getCreatureRespawnTime(String creature) {
+		long result = 0;
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT respawn FROM spawns WHERE creature=\'" + creature
+						+ "\'", null);
+		if (cur.moveToFirst()) {
+			result = cur.getLong(0);
+		}
+
+		database.close();
+
+		return result;
+	}
+
 }

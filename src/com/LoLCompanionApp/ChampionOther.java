@@ -87,4 +87,9 @@ public class ChampionOther extends Activity {
 		champTitle.setText(database.getChampionTitle(champion));
 		champImage.setImageResource(path);
 	}
+	
+
+	public void back(View view) {
+		finish();
+	}
 }
