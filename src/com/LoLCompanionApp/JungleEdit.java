@@ -6,10 +6,16 @@ import android.view.View;
 import android.widget.TextView;
 
 public class JungleEdit extends Activity {
-	
+
 	DatabaseExtra database;
 	String defaultCreatureOrder;
-	
+
+	//
+	// types of settings:
+	// - order of creatures
+	// - alarm type (sound/vibrate/both)
+	//
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.jungleedit);
@@ -21,17 +27,14 @@ public class JungleEdit extends Activity {
 		// set the default creature order
 		defaultCreatureOrder = database.getDefaultCreatureOrder();
 	}
-	
-	public void saveSettings(View buttonSave)
-	{
-		
-	}
-	
-	public void defaultSettings(View buttonDefault)
-	{
-		
+
+	public void saveSettings(View buttonSave) {
+
 	}
 
+	public void defaultSettings(View buttonDefault) {
+
+	}
 
 	public void initializeHeader() {
 		TextView title = (TextView) findViewById(R.id.HeaderTitle);
