@@ -434,4 +434,22 @@ public class DatabaseExtra extends DatabaseHelper {
 		return result;
 	}
 
+	public String getDefaultCreatureOrder() {
+		String result = "";
+
+		SQLiteDatabase database = getReadableDatabase();
+
+		// run the query and get result
+		Cursor cur = database.rawQuery(
+				"SELECT value FROM settings WHERE setting='creature order'",
+				null);
+		if (cur.moveToFirst()) {
+			result = cur.getString(0);
+		}
+
+		database.close();
+
+		return result;
+	}
+
 }

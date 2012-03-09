@@ -4,64 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <include
+        android:id="@+id/jungleheader"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:background="@drawable/bg2"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:linksClickable="false"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/HeaderTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:linksClickable="false"
-            android:paddingBottom="1dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="1dp"
-            android:text="Header"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black"
-            android:typeface="serif" />
-
-        <!--
-	      ONLY FOR PLAYBOOK RELEASES
-	    <Button
-	        android:id="@+id/buttonBack"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignTop="@+id/linearLayout1"
-	        android:layout_margin="3dp"
-	        android:background="@drawable/backarrow"
-	        android:onClick="back"
-	        android:textColor="#000000" />
-        -->
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1px"
+        layout="@layout/jungleheader" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center" >
+        android:orientation="vertical" >
 
-        <GridView
-            android:id="@+id/gridCreatures"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
+
+            <GridView
+                android:id="@+id/gridCreatures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="6"
+                android:verticalSpacing="1dp" >
+            </GridView>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:listSelector="@android:color/transparent"
-            android:numColumns="6"
-            android:verticalSpacing="1dp" >
-        </GridView>
+            android:onClick="startNewGameCounts"
+            android:text="Start New Game" />
     </LinearLayout>
 
 </LinearLayout>

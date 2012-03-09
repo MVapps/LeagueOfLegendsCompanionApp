@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -24,6 +25,8 @@ public class JungleMain extends Activity {
 	CreatureCountDown[] timers;
 	String[] creatures;
 	ArrayList<HashMap<String, String>> creatureList;
+	String defaultCreatureOrder;
+	int fadeLevel = 150;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +35,9 @@ public class JungleMain extends Activity {
 		initializeHeader();
 
 		database = new DatabaseExtra(this);
+
+		// set the default creature order
+		defaultCreatureOrder = database.getDefaultCreatureOrder();
 	}
 
 	@Override
@@ -42,17 +48,44 @@ public class JungleMain extends Activity {
 		addCreatures();
 	}
 
+	public void startNewGameCounts(View buttonView) {
+		GridView gview = (GridView) findViewById(R.id.gridCreatures);
+
+		// initialize all counters with initial values
+		for (int i = 0; i < gview.getChildCount(); i += 1) {
+
+			// if the timer is running
+			if (timers[i] != null && timers[i].isRunning()) {
+				timers[i].cancel();
+				timers[i] = null;
+			}
+
+			// get new time, convert to milliseconds
+			long spawnTime = database.getCreatureInitialSpawnTime(creatures[i]) * 1000;
+
+			// new count down timer
+			timers[i] = new CreatureCountDown(spawnTime, gview.getChildAt(i),
+					R.id.textCreatureCount);
+
+			// set new Opacity for the count text view
+			gview.getChildAt(i).findViewById(R.id.textCreatureCount)
+					.setBackgroundColor(Color.argb(fadeLevel, 0, 0, 0));
+		}
+
+		// start the counters at relatively the same time
+		for (int i = 0; i < gview.getChildCount(); i += 1) {
+			// start the counter
+			timers[i].start();
+		}
+	}
+
 	public void addCreatures() {
 		// get the general preferences for how to view the champions
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		// get the creatures in the preferences, or get the default set
-		creatures = prefs
-				.getString(
-						"JungleCreaturePositions",
-						"Golems,Wraiths,Wolves,Ancient Golem,Lizard Elder,Dragon,"
-								+ "Golems,Wraiths,Wolves,Ancient Golem,Lizard Elder,Baron Nashor")
-				.split(",");
+		creatures = prefs.getString("JungleCreaturePositions",
+				defaultCreatureOrder).split(",");
 
 		// initialize the timers
 		timers = new CreatureCountDown[creatures.length];
@@ -103,7 +136,9 @@ public class JungleMain extends Activity {
 		@Override
 		public void onFinish() {
 			running = false;
-			counter.setText("Spawned!");
+			// colorize and notify which creature spawned
+			counter.setText("!!!");
+			counter.setBackgroundColor(Color.argb(fadeLevel, 255, 0, 0));
 		}
 
 		@Override
@@ -130,37 +165,49 @@ public class JungleMain extends Activity {
 	public class CreatureCountClick implements OnItemClickListener {
 		public void onItemClick(AdapterView<?> adapterView, View clickedView,
 				int creaturePosition, long id) {
+
+			// get the textview that was clicked
+			TextView counterText = (TextView) clickedView
+					.findViewById(R.id.textCreatureCount);
+
 			// if the counter has been initialized
 			if (timers[creaturePosition] != null) {
 				// check if the counter is running
 				if (!timers[creaturePosition].isRunning()) {
-					long respawnTime = database
-							.getCreatureRespawnTime(creatures[creaturePosition]) * 1000;
-
-					// new count down timer
-					timers[creaturePosition] = new CreatureCountDown(
-							respawnTime, clickedView, R.id.textCreatureCount);
-					timers[creaturePosition].start();
-				} else {
+					// start counter
+					startCounter(creaturePosition, clickedView);
+					// add transparency
+					counterText.setBackgroundColor(Color.argb(fadeLevel, 0, 0,
+							0));
+				}
+				// if the counter is running, cancel it.
+				else {
 					timers[creaturePosition].cancel();
 					timers[creaturePosition] = null;
+
 					// reset text to nothing
-					((TextView) clickedView
-							.findViewById(R.id.textCreatureCount)).setText("");
+					counterText.setText("");
+					// add transparency
+					counterText.setBackgroundColor(Color.argb(0, 0, 0, 0));
 				}
 			}
-			// if the timer has not been initialized, create a new one and run
-			// it
+			// if the timer has not been initialized, create a new one
 			else {
-				long respawnTime = database
-						.getCreatureRespawnTime(creatures[creaturePosition]) * 1000;
-
-				// new count down timer
-				timers[creaturePosition] = new CreatureCountDown(respawnTime,
-						clickedView, R.id.textCreatureCount);
-				// start the counter
-				timers[creaturePosition].start();
+				startCounter(creaturePosition, clickedView);
+				// add transparency
+				counterText.setBackgroundColor(Color.argb(fadeLevel, 0, 0, 0));
 			}
+		}
+
+		private void startCounter(int creaturePosition, View clickedView) {
+			long respawnTime = database
+					.getCreatureRespawnTime(creatures[creaturePosition]) * 1000;
+
+			// new count down timer
+			timers[creaturePosition] = new CreatureCountDown(respawnTime,
+					clickedView, R.id.textCreatureCount);
+			// start the counter
+			timers[creaturePosition].start();
 		}
 	}
 
