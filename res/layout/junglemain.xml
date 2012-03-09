@@ -5,11 +5,11 @@
     android:orientation="vertical" >
 
     <include
-        android:id="@+id/jungleheader"
+        android:id="@+id/generalheader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="1px"
-        layout="@layout/jungleheader" />
+        layout="@layout/generalheader" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -29,16 +29,32 @@
                 android:layout_height="wrap_content"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="6"
+                android:padding="5dp"
                 android:verticalSpacing="1dp" >
             </GridView>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="startNewGameCounts"
-            android:text="Start New Game" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/buttonNewGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="startNewGameCounts"
+                android:text="New Game" />
+
+            <Button
+                android:id="@+id/buttonJungleSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="editSettings"
+                android:text="Settings" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -21,7 +21,7 @@ public class About extends Activity {
 				+ "All guides linked in this app are Copyright\u00A9 their respective authors."
 				+ "All coding is Copyright\u00A9 the creators of this app."
 				+ "\n\nA special thanks to:\n" + "Shane Wilton\n"
-				+ "Adam Wooton\n" + "Matus Faro\n"
+				+ "Adam Wootton\n" + "Matus F\n"
 				+ "reddit.com/r/leagueoflegends");
 	}
 

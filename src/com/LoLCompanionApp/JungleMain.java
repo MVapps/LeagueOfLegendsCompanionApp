@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,12 +21,12 @@ import android.widget.TextView;
 
 public class JungleMain extends Activity {
 
-	DatabaseExtra database;
-	CreatureCountDown[] timers;
-	String[] creatures;
-	ArrayList<HashMap<String, String>> creatureList;
-	String defaultCreatureOrder;
-	int fadeLevel = 150;
+	private DatabaseExtra database;
+	private CreatureCountDown[] timers;
+	private String[] creatures;
+	private ArrayList<HashMap<String, String>> creatureList;
+	private String defaultCreatureOrder;
+	private int fadeLevel = 150;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,6 +119,13 @@ public class JungleMain extends Activity {
 
 	public void back(View view) {
 		finish();
+	}
+
+	public void editSettings(View buttonView) {
+		Intent settingsPage = new Intent();
+		settingsPage.setClassName("com.LoLCompanionApp",
+				"com.LoLCompanionApp.JungleEdit");
+		startActivity(settingsPage);
 	}
 
 	public class CreatureCountDown extends CountDownTimer {
@@ -230,11 +237,6 @@ public class JungleMain extends Activity {
 							+ creatureName.getText().toString()
 									.replace(" ", "").toLowerCase(),
 					"drawable", "com.LoLCompanionApp");
-
-			Log.i("creature", path
-					+ "   creature_"
-					+ creatureName.getText().toString().replace(" ", "")
-							.toLowerCase());
 
 			// if a picture was found
 			if (path != 0) {
