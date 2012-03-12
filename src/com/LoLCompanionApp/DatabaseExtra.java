@@ -64,21 +64,18 @@ public class DatabaseExtra extends DatabaseHelper {
 		// get champions that counter the chosen champion
 
 		String[][] result = null;
+		champ = champ.replace("'", "''");
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// create cursor array to hold the two result sets (ne for default
 		// values and one for user values)
 		Cursor[] curArray = {
-				database.rawQuery(
-						"SELECT * FROM " + USER_COUNTER_TABLE + " WHERE "
-								+ searchColumn + "=\'"
-								+ champ.replace("'", "''") + "\'", null),
-				database.rawQuery(
-						"SELECT * FROM " + DEFAULT_COUNTER_TABLE + " WHERE "
-								+ searchColumn + "=\'"
-								+ champ.replace("'", "''")
-								+ "\' AND visible=\'true\'", null) };
+				database.rawQuery("SELECT * FROM " + USER_COUNTER_TABLE
+						+ " WHERE " + searchColumn + "=\'" + champ + "\'", null),
+				database.rawQuery("SELECT * FROM " + DEFAULT_COUNTER_TABLE
+						+ " WHERE " + searchColumn + "=\'" + champ
+						+ "\' AND visible=\'true\'", null) };
 
 		// create a result array based on how many rows returned
 		result = new String[curArray[0].getCount() + curArray[1].getCount()][6];
@@ -159,7 +156,7 @@ public class DatabaseExtra extends DatabaseHelper {
 		// if deleting a row that is added by the user
 		if (type.equals("user")) {
 			try {
-				database.delete(USER_COUNTER_TABLE, "id='" + id + "'", null);
+				database.delete(USER_COUNTER_TABLE, "id=?", new String[] { id });
 				database.close();
 				return true;
 			} catch (SQLiteException e) {
@@ -174,8 +171,8 @@ public class DatabaseExtra extends DatabaseHelper {
 
 			try {
 				// update the database with new values. (make rows disappear)
-				database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id
-						+ "'", null);
+				database.update(DEFAULT_COUNTER_TABLE, values, "id=?",
+						new String[] { id });
 				database.close();
 				return true;
 			} catch (SQLiteException e) {
@@ -196,8 +193,8 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		try {
 			// update the database with new values. (make rows appear)
-			database.update(DEFAULT_COUNTER_TABLE, values, "id='" + id + "'",
-					null);
+			database.update(DEFAULT_COUNTER_TABLE, values, "id=?",
+					new String[] { id });
 		} catch (SQLiteException e) {
 			e.printStackTrace();
 		}
@@ -236,8 +233,8 @@ public class DatabaseExtra extends DatabaseHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// get database cursors
-		Cursor curUser = database.rawQuery("SELECT * FROM "
-				+ USER_COUNTER_TABLE, null);
+		Cursor curUser = database.rawQuery("SELECT * FROM ?",
+				new String[] { USER_COUNTER_TABLE });
 
 		// write the user files
 		// write down the actual information written by the user into a file in
@@ -301,8 +298,9 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		SQLiteDatabase database = getReadableDatabase();
 
-		Cursor curDefault = database.rawQuery("SELECT * FROM "
-				+ DEFAULT_COUNTER_TABLE + " WHERE visible='false'", null);
+		Cursor curDefault = database.rawQuery(
+				"SELECT * FROM ? WHERE visible='false'",
+				new String[] { DEFAULT_COUNTER_TABLE });
 
 		// write the the default file.
 		// write down all ids of the files that have been marked as
@@ -387,8 +385,8 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT creaturegroup FROM spawns WHERE creature=\'" + creature
-						+ "\'", null);
+				"SELECT creaturegroup FROM spawns WHERE creature=?",
+				new String[] { creature });
 		if (cur.moveToFirst()) {
 			result = cur.getString(0);
 		}
@@ -405,8 +403,8 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT initialspawn FROM spawns WHERE creature=\'" + creature
-						+ "\'", null);
+				"SELECT initialspawn FROM spawns WHERE creature=?",
+				new String[] { creature });
 		if (cur.moveToFirst()) {
 			result = cur.getLong(0);
 		}
@@ -423,8 +421,8 @@ public class DatabaseExtra extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT respawn FROM spawns WHERE creature=\'" + creature
-						+ "\'", null);
+				"SELECT respawn FROM spawns WHERE creature=?",
+				new String[] { creature });
 		if (cur.moveToFirst()) {
 			result = cur.getLong(0);
 		}
