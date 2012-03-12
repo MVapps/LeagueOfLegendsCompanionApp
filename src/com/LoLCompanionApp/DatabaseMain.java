@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-public class DatabaseMain extends DatabaseHelper{
+public class DatabaseMain extends DatabaseHelper {
 
 	public DatabaseMain(Context context) {
 		super(context, "gameStats_en_US.sqlite");
 	}
-	
+
 	public String[] getAllChampions() throws SQLiteException {
 		Cursor cur;
 		String[] result = null;
@@ -83,37 +83,17 @@ public class DatabaseMain extends DatabaseHelper{
 	public int getChampionId(String champ) throws SQLiteException {
 		int result = 0;
 
-		champ = removeSpecialChars(champ);
-
 		SQLiteDatabase database = getReadableDatabase();
-
 		// run the query and get result
-		Cursor cur = database.rawQuery("SELECT id FROM champions WHERE name=\'"
-				+ champ + "\'", null);
+		Cursor cur = database.rawQuery(
+				"SELECT id FROM champions WHERE displayName=?",
+				new String[] { champ });
 		if (cur.moveToFirst()) {
 			result = cur.getInt(0);
 		}
-
 		database.close();
 
 		return result;
-	}
-
-	public String getChampionName(int id) throws SQLiteException {
-		String string = null;
-
-		SQLiteDatabase database = getReadableDatabase();
-
-		// run the query and get result
-		Cursor cur = database.rawQuery("SELECT name FROM champions WHERE id=\'"
-				+ id + "\'", null);
-		if (cur.moveToFirst()) {
-			string = cur.getString(0);
-		}
-
-		database.close();
-
-		return string;
 	}
 
 	public String removeSpecialChars(String name) {
@@ -141,14 +121,17 @@ public class DatabaseMain extends DatabaseHelper{
 				// get the two values
 				result[i][0] = "" + cur.getString(cur.getColumnIndex("name"));
 				result[i][1] = "" + cur.getString(cur.getColumnIndex("effect"));
-				//if the effect column is empty add the text from the description
+				// if the effect column is empty add the text from the
+				// description
 				if (result[i][1].equals("null")) {
-					result[i][1] = cur.getString(cur.getColumnIndex("description"));
+					result[i][1] = cur.getString(cur
+							.getColumnIndex("description"));
 				}
 				result[i][2] = "" + cur.getString(cur.getColumnIndex("hotkey"));
 				result[i][3] = "" + cur.getString(cur.getColumnIndex("cost"));
 				result[i][4] = "" + cur.getString(cur.getColumnIndex("range"));
-				result[i][5] = "" + cur.getString(cur.getColumnIndex("cooldown"));
+				result[i][5] = ""
+						+ cur.getString(cur.getColumnIndex("cooldown"));
 				// move to next row
 				cur.moveToNext();
 			}
@@ -182,13 +165,13 @@ public class DatabaseMain extends DatabaseHelper{
 
 	public String[] getChampionCounters(String champion) {
 		String[] string = null;
+		int id = getChampionId(champion);
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT counters FROM champions WHERE name=\'"
-						+ champion.replace("'", "''") + "\'", null);
+				"SELECT counters FROM champions WHERE id='" + id + "'", null);
 		if (cur.moveToFirst()) {
 			string = cur.getString(0).split(",");
 		}
@@ -220,13 +203,13 @@ public class DatabaseMain extends DatabaseHelper{
 
 	public String[] getChampionCounteredBy(String champion) {
 		String[] string = null;
+		int id = getChampionId(champion);
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT countered FROM champions WHERE name=\'"
-						+ champion.replace("'", "''") + "\'", null);
+				"SELECT countered FROM champions WHERE id='" + id + "'", null);
 		if (cur.moveToFirst() && cur.getString(0) != null) {
 			string = cur.getString(0).split(",");
 		}
@@ -248,7 +231,7 @@ public class DatabaseMain extends DatabaseHelper{
 		cur = database.rawQuery("SELECT tags FROM champions WHERE id=\'" + id
 				+ "\'", null);
 
-		// go through data and retrieve the name of drinks
+		// go through data
 		if (cur.moveToFirst()) {
 			result = cur.getString(0).toUpperCase();
 		}
@@ -268,7 +251,7 @@ public class DatabaseMain extends DatabaseHelper{
 				"SELECT description FROM champions WHERE id=\'" + id + "\'",
 				null);
 
-		// go through data and retrieve the name of drinks
+		// go through data
 		if (cur.moveToFirst()) {
 			// initialize variable
 			result = cur.getString(cur.getColumnIndex("description"));
