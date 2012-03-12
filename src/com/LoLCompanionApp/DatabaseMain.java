@@ -70,7 +70,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT title FROM champions WHERE id=\'" + id + "\'", null);
+				"SELECT title FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 		if (cur.moveToFirst()) {
 			string = cur.getString(0);
 		}
@@ -111,8 +112,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT * FROM championAbilities WHERE championId=\'" + id
-						+ "\'", null);
+				"SELECT * FROM championAbilities WHERE championId=?",
+				new String[] { String.valueOf(id) });
 
 		// go to first row
 		if (cur.moveToFirst()) {
@@ -150,8 +151,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query
 		Cursor cur = database.rawQuery(
-				"SELECT COUNT(*) FROM championSkins WHERE championId=\'" + id
-						+ "\'", null);
+				"SELECT COUNT(*) FROM championSkins WHERE championId=?",
+				new String[] { String.valueOf(id) });
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
@@ -171,7 +172,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT counters FROM champions WHERE id='" + id + "'", null);
+				"SELECT counters FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 		if (cur.moveToFirst()) {
 			string = cur.getString(0).split(",");
 		}
@@ -182,7 +184,7 @@ public class DatabaseMain extends DatabaseHelper {
 	}
 
 	public String getSkinName(String champ, int rank) {
-		String string = null;
+		String skinName = null;
 
 		champ = removeSpecialChars(champ).replace(" ", "");
 
@@ -190,15 +192,15 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT displayName FROM championSkins WHERE portraitPath=\'"
-						+ champ + "_" + rank + ".jpg\'", null);
+				"SELECT displayName FROM championSkins WHERE portraitPath=?",
+				new String[] { champ + "_" + rank + ".jpg" });
 		if (cur.moveToFirst()) {
-			string = cur.getString(0);
+			skinName = cur.getString(0);
 		}
 
 		database.close();
 
-		return string;
+		return skinName;
 	}
 
 	public String[] getChampionCounteredBy(String champion) {
@@ -209,7 +211,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT countered FROM champions WHERE id='" + id + "'", null);
+				"SELECT countered FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 		if (cur.moveToFirst() && cur.getString(0) != null) {
 			string = cur.getString(0).split(",");
 		}
@@ -228,8 +231,8 @@ public class DatabaseMain extends DatabaseHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		cur = database.rawQuery("SELECT tags FROM champions WHERE id=\'" + id
-				+ "\'", null);
+		cur = database.rawQuery("SELECT tags FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 
 		// go through data
 		if (cur.moveToFirst()) {
@@ -248,8 +251,8 @@ public class DatabaseMain extends DatabaseHelper {
 
 		// run the query
 		Cursor cur = database.rawQuery(
-				"SELECT description FROM champions WHERE id=\'" + id + "\'",
-				null);
+				"SELECT description FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 
 		// go through data
 		if (cur.moveToFirst()) {
@@ -268,8 +271,8 @@ public class DatabaseMain extends DatabaseHelper {
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query
-		Cursor cur = database.rawQuery("SELECT * FROM champions WHERE id=\'"
-				+ id + "\'", null);
+		Cursor cur = database.rawQuery("SELECT * FROM champions WHERE id=?",
+				new String[] { String.valueOf(id) });
 
 		// go through data and retrieve the name of drinks
 		if (cur.moveToFirst()) {
