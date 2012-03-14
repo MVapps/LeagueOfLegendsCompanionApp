@@ -11,49 +11,113 @@
         android:layout_marginBottom="1px"
         layout="@layout/generalheader" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Creature Position"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <GridView
                 android:id="@+id/gridCreaturesEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="85dp"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="6"
-                android:verticalSpacing="1dp" >
-            </GridView>
-        </LinearLayout>
+                android:verticalSpacing="1dp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/buttonSave"
+            <TextView
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="saveSettings"
-                android:text="Save Settings" />
+                android:layout_marginTop="10dp"
+                android:text="Other Settings"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <Button
-                android:id="@+id/buttonDefault"
+            <TextView
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="defaultSettings"
-                android:text="Restore Default" />
+                android:text="Select the notification type:" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/radioButtonvibrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="changeNotificationType"
+                    android:tag="vibrate"
+                    android:text="Vibrate" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonsound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="changeNotificationType"
+                    android:tag="sound"
+                    android:text="Play Sound" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonboth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="changeNotificationType"
+                    android:tag="both"
+                    android:text="Vibrate and Play Sound (default)" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonnone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="changeNotificationType"
+                    android:tag="none"
+                    android:text="No notification" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textNotificationType"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/buttonSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="saveSettings"
+                    android:text="Save Settings" />
+
+                <Button
+                    android:id="@+id/buttonDefault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="defaultSettings"
+                    android:text="Restore Default" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

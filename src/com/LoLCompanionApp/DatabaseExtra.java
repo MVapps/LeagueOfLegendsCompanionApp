@@ -433,14 +433,22 @@ public class DatabaseExtra extends DatabaseHelper {
 	}
 
 	public String getDefaultCreatureOrder() {
+		return getDefaultValue("creature order");
+	}
+
+	public String getDefaultNotificationType() {
+		return getDefaultValue("notification");
+	}
+
+	private String getDefaultValue(String type) {
 		String result = "";
 
 		SQLiteDatabase database = getReadableDatabase();
 
 		// run the query and get result
 		Cursor cur = database.rawQuery(
-				"SELECT value FROM settings WHERE setting='creature order'",
-				null);
+				"SELECT value FROM settings WHERE setting=?",
+				new String[] { type });
 		if (cur.moveToFirst()) {
 			result = cur.getString(0);
 		}
