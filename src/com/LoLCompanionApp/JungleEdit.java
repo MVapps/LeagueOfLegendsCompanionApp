@@ -31,12 +31,6 @@ public class JungleEdit extends Activity {
 	GridView gview;
 	SharedPreferences prefs;
 
-	//
-	// types of settings:
-	// - order of creatures
-	// - alarm type (sound/vibrate/both)
-	//
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.jungleedit);
@@ -108,13 +102,8 @@ public class JungleEdit extends Activity {
 		}
 	}
 
-	public void changeNotificationType(View radioButton) {
-		// add temporary text to a hidden field
-		TextView notification = (TextView) findViewById(R.id.textNotificationType);
-		notification.setText(radioButton.getTag().toString());
-	}
-
 	public void saveSettings(View buttonSave) {
+		SharedPreferences.Editor editor = prefs.edit();
 		String creatureOrder = "";
 
 		// go through the gridview and get the names of the creatures in order
@@ -131,35 +120,33 @@ public class JungleEdit extends Activity {
 				creatureOrder += ",";
 			}
 		}
-		// put in the creature order into the general prefs
-		prefs.edit().putString("JungleCreaturePositions", creatureOrder);
 
 		// get the notification type selected
-		TextView creatureNotification = (TextView) findViewById(R.id.textNotificationType);
+		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+		RadioButton radioButton = (RadioButton) findViewById(radioGroup
+				.getCheckedRadioButtonId());
 
-		// if non eselected make it the default one
-		if (creatureNotification.getText().toString() == "") {
-			creatureNotification.setText(defaultNotificationType);
-		}
-
-		// add the new settings to the shared preferences
-		prefs.edit().putString("JungleCreatureNotification",
-				creatureNotification.getText().toString());
+		// put the settings into the general prefs
+		editor.putString("JungleCreaturePositions", creatureOrder);
+		editor.putString("JungleCreatureNotification", radioButton.getTag()
+				.toString());
 
 		// commit both additions and notify user
-		prefs.edit().commit();
+		editor.commit();
 		Toast.makeText(this, "Settings saved!", Toast.LENGTH_SHORT).show();
 	}
 
 	public void defaultSettings(View buttonDefault) {
-		// remove the prefs for the jungle timer
-		prefs.edit().remove("JungleCreaturePositions");
-		prefs.edit().remove("JungleCreatureNotification");
+		SharedPreferences.Editor editor = prefs.edit();
 
-		prefs.edit().commit();
+		// remove the prefs for the jungle timer
+		editor.remove("JungleCreaturePositions");
+		editor.remove("JungleCreatureNotification");
+
+		editor.commit();
 
 		// tell user of status
-		Toast.makeText(this, "Default settings resotred.", Toast.LENGTH_SHORT)
+		Toast.makeText(this, "Default settings restored.", Toast.LENGTH_SHORT)
 				.show();
 
 		// restart screen so changes take effect
@@ -212,10 +199,6 @@ public class JungleEdit extends Activity {
 				DialogInterface.OnClickListener {
 
 			public void onClick(DialogInterface dialog, int item) {
-
-				Toast.makeText(getApplicationContext(), creaturesPick[item],
-						Toast.LENGTH_SHORT).show();
-
 				TextView creatureText = (TextView) clickedLayout
 						.findViewById(R.id.textCreatureName);
 				ImageView creatureImage = (ImageView) clickedLayout

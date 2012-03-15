@@ -32,7 +32,7 @@
             <GridView
                 android:id="@+id/gridCreaturesEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="85dp"
+                android:layout_height="190dp"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="6"
                 android:verticalSpacing="1dp" />
@@ -41,7 +41,6 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="Other Settings"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -58,10 +57,16 @@
                 android:orientation="vertical" >
 
                 <RadioButton
+                    android:id="@+id/radioButtonboth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="both"
+                    android:text="Vibrate and Play Sound (default)" />
+
+                <RadioButton
                     android:id="@+id/radioButtonvibrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="changeNotificationType"
                     android:tag="vibrate"
                     android:text="Vibrate" />
 
@@ -69,32 +74,16 @@
                     android:id="@+id/radioButtonsound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="changeNotificationType"
                     android:tag="sound"
                     android:text="Play Sound" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonboth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="changeNotificationType"
-                    android:tag="both"
-                    android:text="Vibrate and Play Sound (default)" />
 
                 <RadioButton
                     android:id="@+id/radioButtonnone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="changeNotificationType"
                     android:tag="none"
                     android:text="No notification" />
             </RadioGroup>
-
-            <TextView
-                android:id="@+id/textNotificationType"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="" />
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
