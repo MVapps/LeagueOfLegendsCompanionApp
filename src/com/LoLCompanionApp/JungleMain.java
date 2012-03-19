@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -132,9 +135,7 @@ public class JungleMain extends Activity {
 
 	public class CreatureCountDown extends CountDownTimer {
 		private TextView counter;
-		private LinearLayout mainParent;
 		private boolean running;
-		private Notification notification;
 
 		public CreatureCountDown(long millisInFuture, View parent, int childId) {
 			// 1000 milliseconds, therefore every second will tick
@@ -142,9 +143,6 @@ public class JungleMain extends Activity {
 
 			// assign the textFieldTag to the class variable
 			counter = (TextView) parent.findViewById(childId);
-			mainParent = (LinearLayout) parent;
-
-			createNotification();
 		}
 
 		@Override
@@ -154,37 +152,25 @@ public class JungleMain extends Activity {
 			counter.setText("!!!");
 			counter.setBackgroundColor(Color.argb(fadeLevel, 255, 0, 0));
 
-			// // display the notification
-			// NotificationManager notifManager = (NotificationManager)
-			// getSystemService(NOTIFICATION_SERVICE);
-			//
-			// notifManager.notify(counter.getId(), notification);
+			// CREATE NOTIFICATION SYSTEM
 
-		}
+//			Uri alert = RingtoneManager
+//					.getDefaultUri(RingtoneManager.TYPE_ALARM);
+//			if (alert == null) {
+//				// alert is null, using backup
+//				alert = RingtoneManager
+//						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//				if (alert == null) {
+//					// alert backup is null, using 2nd backup
+//					alert = RingtoneManager
+//							.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+//				}
+//			}
+//
+//			Ringtone ring = RingtoneManager.getRingtone(
+//					getApplicationContext(), alert);
+//			ring.play();
 
-		private void createNotification() {
-			// get the name of the creature that spawned
-			TextView creatureText = (TextView) mainParent
-					.findViewById(R.id.textCreatureName);
-
-			// get the notification type
-			String notifiaction = database.getDefaultNotificationType();
-
-			// create the notification
-			notification = new Notification(
-					android.R.drawable.ic_popup_reminder,
-					creatureText.getText() + " has spawned!",
-					System.currentTimeMillis());
-
-			// if sound or both, add sound
-			if (notifiaction.equals("sound") || notifiaction.equals("both")) {
-				notification.defaults |= Notification.DEFAULT_SOUND;
-			}
-
-			// if vibrate or both, add vibrate
-			if (notifiaction.equals("vibrate") || notifiaction.equals("both")) {
-				notification.defaults |= Notification.DEFAULT_VIBRATE;
-			}
 		}
 
 		@Override
