@@ -113,6 +113,7 @@ public class ChampionSkills extends Activity {
 			String skillImg = database.removeSpecialChars(
 					textName.getText().toString().trim().replace(" ", "_"))
 					.toLowerCase();
+			
 			// special cases
 			if (skillImg.equals("90_caliber_net")) {
 				skillImg = "ninety_caliber_net";

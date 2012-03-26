@@ -100,7 +100,7 @@ public class DatabaseMain extends DatabaseHelper {
 	public String removeSpecialChars(String name) {
 		return name.replace(".", "").replace(" ", "").replace("/", "")
 				.replace("'", "").replace(";", "").replace(":", "")
-				.replace("-", "").replace("!", "");
+				.replace("-", "").replace("!", "").replace(",", "");
 	}
 
 	public String[][] getAllSkillsByChampName(String champ)
