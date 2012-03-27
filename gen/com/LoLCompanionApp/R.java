@@ -215,10 +215,10 @@ public final class R {
         public static final int dazzle=0x7f0200c9;
         public static final int deadly_cadence=0x7f0200ca;
         public static final int deadly_venom=0x7f0200cb;
-        public static final int death0s_caress=0x7f0200cc;
-        public static final int death_defied=0x7f0200cd;
-        public static final int death_lotus=0x7f0200ce;
-        public static final int death_ray=0x7f0200cf;
+        public static final int death_defied=0x7f0200cc;
+        public static final int death_lotus=0x7f0200cd;
+        public static final int death_ray=0x7f0200ce;
+        public static final int deaths_caress=0x7f0200cf;
         public static final int debilitating_poison=0x7f0200d0;
         public static final int deceive=0x7f0200d1;
         public static final int decisive_strike=0x7f0200d2;

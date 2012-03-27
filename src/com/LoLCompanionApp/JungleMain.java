@@ -8,12 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,22 +151,38 @@ public class JungleMain extends Activity {
 
 			// CREATE NOTIFICATION SYSTEM
 
-//			Uri alert = RingtoneManager
-//					.getDefaultUri(RingtoneManager.TYPE_ALARM);
-//			if (alert == null) {
-//				// alert is null, using backup
-//				alert = RingtoneManager
-//						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//				if (alert == null) {
-//					// alert backup is null, using 2nd backup
-//					alert = RingtoneManager
-//							.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-//				}
-//			}
-//
-//			Ringtone ring = RingtoneManager.getRingtone(
-//					getApplicationContext(), alert);
-//			ring.play();
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(getBaseContext());
+
+			String notification = prefs.getString("JungleCreatureNotification",
+					database.getDefaultNotificationType());
+
+			if (notification.equals("both") || notification.equals("vibrate")) {
+				Vibrator vibrator;
+				vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+				vibrator.vibrate(500);
+			}
+
+			if (notification.equals("both") || notification.equals("sound")) {
+				
+			}
+
+			// Uri alert = RingtoneManager
+			// .getDefaultUri(RingtoneManager.TYPE_ALARM);
+			// if (alert == null) {
+			// // alert is null, using backup
+			// alert = RingtoneManager
+			// .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			// if (alert == null) {
+			// // alert backup is null, using 2nd backup
+			// alert = RingtoneManager
+			// .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			// }
+			// }
+			//
+			// Ringtone ring = RingtoneManager.getRingtone(
+			// getApplicationContext(), alert);
+			// ring.play();
 
 		}
 
