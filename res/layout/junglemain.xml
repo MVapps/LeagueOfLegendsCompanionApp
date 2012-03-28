@@ -31,7 +31,8 @@
                 android:listSelector="@android:color/transparent"
                 android:numColumns="6"
                 android:padding="5dp"
-                android:verticalSpacing="1dp" >
+                android:verticalSpacing="1dp" 
+                android:gravity="center_horizontal">
             </GridView>
         </LinearLayout>
 

@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -157,33 +160,32 @@ public class JungleMain extends Activity {
 			String notification = prefs.getString("JungleCreatureNotification",
 					database.getDefaultNotificationType());
 
+			// determine the settings and notify user accordingly
+
 			if (notification.equals("both") || notification.equals("vibrate")) {
-				Vibrator vibrator;
-				vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				vibrator.vibrate(500);
+				Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+				vibrator.vibrate(1000);
 			}
 
 			if (notification.equals("both") || notification.equals("sound")) {
-				
+
+				Uri alert = RingtoneManager
+						.getDefaultUri(RingtoneManager.TYPE_ALARM);
+				if (alert == null) {
+					// alert is null, using backup
+					alert = RingtoneManager
+							.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					if (alert == null) {
+						// alert backup is null, using 2nd backup
+						alert = RingtoneManager
+								.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+					}
+				}
+
+				Ringtone r = RingtoneManager.getRingtone(
+						getApplicationContext(), alert);
+				r.play();
 			}
-
-			// Uri alert = RingtoneManager
-			// .getDefaultUri(RingtoneManager.TYPE_ALARM);
-			// if (alert == null) {
-			// // alert is null, using backup
-			// alert = RingtoneManager
-			// .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-			// if (alert == null) {
-			// // alert backup is null, using 2nd backup
-			// alert = RingtoneManager
-			// .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-			// }
-			// }
-			//
-			// Ringtone ring = RingtoneManager.getRingtone(
-			// getApplicationContext(), alert);
-			// ring.play();
-
 		}
 
 		@Override

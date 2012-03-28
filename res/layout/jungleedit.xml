@@ -36,7 +36,8 @@
                 android:layout_height="190dp"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="6"
-                android:verticalSpacing="1dp" />
+                android:verticalSpacing="1dp" 
+                android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/textView1"
