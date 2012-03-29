@@ -46,9 +46,9 @@ public class MainOther extends Activity {
 
 			if (choice.equals(menu[0])) {
 				className = "com.LoLCompanionApp.GeneralGuides";
-			} else if (choice.equals(menu[1])) {
+			} /*else if (choice.equals(menu[1])) {
 				className = "com.LoLCompanionApp.JungleMain";
-			}
+			}*/
 
 			// Loads up the page
 			Intent newPage = new Intent();
