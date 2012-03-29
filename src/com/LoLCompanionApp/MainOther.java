@@ -12,7 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MainOther extends Activity {
 
-	String[] menu = { "General Guides", "Jungle Timer" };
+	String[] menu = { "General Guides"/*, "Jungle Timer"*/ };
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
