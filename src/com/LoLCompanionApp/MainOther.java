@@ -15,6 +15,7 @@ public class MainOther extends Activity {
 	// Menu Strings
 	String[] menu = { "General Guides", "Jungle Timer" };
 
+	// On create
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainother);
