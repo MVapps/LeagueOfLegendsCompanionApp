@@ -187,6 +187,7 @@ public class DatabaseMain extends DatabaseHelper {
 		String skinName = null;
 
 		champ = removeSpecialChars(champ).replace(" ", "");
+		champ.toLowerCase();
 
 		SQLiteDatabase database = getReadableDatabase();
 
