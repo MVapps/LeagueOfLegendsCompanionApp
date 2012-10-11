@@ -29,7 +29,7 @@ public class Main extends Activity {
 	public void patches(View button) {
 		Intent browserIntent = new Intent(
 				Intent.ACTION_VIEW,
-				Uri.parse("http://na.leagueoflegends.com/news/fiora-patch-notes"));
+				Uri.parse("http://na.leagueoflegends.com/news/release-notes"));
 		startActivity(browserIntent);
 	}
 
