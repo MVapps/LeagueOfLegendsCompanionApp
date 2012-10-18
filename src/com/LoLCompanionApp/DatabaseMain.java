@@ -194,7 +194,7 @@ public class DatabaseMain extends DatabaseHelper {
 		// run the query and get result
 		Cursor cur = database.rawQuery(
 				"SELECT displayName FROM championSkins WHERE portraitPath=?",
-				new String[] { champ + "_" + rank + ".jpg" });
+				new String[] { champ.toLowerCase() + "_" + rank + ".jpg" });
 		if (cur.moveToFirst()) {
 			skinName = cur.getString(0);
 		}
