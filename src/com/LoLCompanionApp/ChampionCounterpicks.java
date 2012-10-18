@@ -74,7 +74,6 @@ public class ChampionCounterpicks extends Activity {
 			header.setBackgroundResource(0);
 			header.setTextColor(Color.WHITE);
 			header.setText(champion + " " + viewCounter);
-
 			if (!viewCounter.equals("Counters")) {
 				header.setText(champion + " is " + viewCounter);
 			}
